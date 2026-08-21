@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Globe2, Shield, Users, LogIn } from "lucide-react";
+import { Globe2, LogIn } from "lucide-react";
 
 export default function Navbar() {
   return (
@@ -18,10 +18,6 @@ export default function Navbar() {
       <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
         <Link href="/committee" className="hover:text-white transition">
           Live Committee
-        </Link>
-        <Link href="/admin" className="flex items-center space-x-1 hover:text-white transition">
-          <Shield className="w-4 h-4 text-indigo-400" />
-          <span>Admin Panel</span>
         </Link>
       </nav>
 
