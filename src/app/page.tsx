@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import { Globe2, ShieldCheck, Sparkles, BookOpen, Users2, ArrowRight } from "lucide-react";
+import { Globe2, Sparkles, BookOpen, Users2, ArrowRight } from "lucide-react";
 
 export default function LandingPage() {
   return (
@@ -26,28 +26,28 @@ export default function LandingPage() {
         </h1>
 
         <p className="mt-6 text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
-          From intensive Rules of Procedure training to dynamic online committee sessions with real-time speaker timers, placard tracking, and customizable rosters.
+          From intensive Rules of Procedure training to dynamic online committee sessions with real-time speaker timers, placard tracking, and customizable debate flow.
         </p>
 
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-md">
           <Link
             href="/committee"
-            className="w-full sm:w-auto px-6 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-xl transition flex items-center justify-center space-x-2 shadow-lg shadow-indigo-600/25"
+            className="w-full sm:w-auto px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-xl transition flex items-center justify-center space-x-2 shadow-lg shadow-indigo-600/25"
           >
             <span>Enter Committee Room</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
-            href="/admin"
-            className="w-full sm:w-auto px-6 py-3.5 bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-200 font-medium rounded-xl transition flex items-center justify-center space-x-2"
+            href="/auth"
+            className="w-full sm:w-auto px-8 py-3.5 bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-200 font-medium rounded-xl transition flex items-center justify-center space-x-2"
           >
-            <span>Secretariat Admin</span>
+            <span>Sign In / Register</span>
           </Link>
         </div>
       </section>
 
       {/* Feature Cards Grid */}
-      <section className="max-w-6xl mx-auto px-6 pb-24 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <section className="max-w-5xl mx-auto px-6 pb-24 grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition flex flex-col">
           <div className="p-3 bg-indigo-500/10 text-indigo-400 w-fit rounded-xl mb-4 border border-indigo-500/20">
             <BookOpen className="w-6 h-6" />
@@ -64,17 +64,7 @@ export default function LandingPage() {
           </div>
           <h3 className="text-lg font-semibold text-white mb-2">Real Committee Flow</h3>
           <p className="text-sm text-slate-400 leading-relaxed">
-            Raise placards, queue in the General Speakers List, yield time, and vote on substantive draft resolutions.
-          </p>
-        </div>
-
-        <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition flex flex-col">
-          <div className="p-3 bg-amber-500/10 text-amber-400 w-fit rounded-xl mb-4 border border-amber-500/20">
-            <ShieldCheck className="w-6 h-6" />
-          </div>
-          <h3 className="text-lg font-semibold text-white mb-2">Admin Customization</h3>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            Secretariat dashboard to create custom committees, add/edit/reorder country delegations on the fly.
+            Raise placards, queue in the General Speakers List, yield speech time, and participate in substantive voting.
           </p>
         </div>
       </section>
