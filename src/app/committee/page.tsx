@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Mic, Hand, Play, Pause, RotateCcw, Plus, Shield, ArrowLeft } from "lucide-react";
+import { Mic, Hand, Play, Pause, RotateCcw, Plus, ArrowLeft } from "lucide-react";
 
 export default function CommitteeLiveRoom() {
   const [speechTime, setSpeechTime] = useState(90);
@@ -65,13 +65,6 @@ export default function CommitteeLiveRoom() {
           <h1 className="font-semibold text-sm sm:text-base">Security Council: Arctic Security</h1>
         </div>
         <div className="flex items-center space-x-3">
-          <Link
-            href="/admin"
-            className="flex items-center space-x-1 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium border border-slate-700 transition"
-          >
-            <Shield className="w-3.5 h-3.5 text-indigo-400" />
-            <span>Admin Roster</span>
-          </Link>
           <button
             onClick={() => setPlacardRaised(!placardRaised)}
             className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition ${
