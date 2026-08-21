@@ -1,19 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Timer, Users, Mic, Hand, Play, Pause, RotateCcw, Plus } from "lucide-react";
+import Link from "next/link";
+import { Mic, Hand, Play, Pause, RotateCcw, Plus, Shield, ArrowLeft } from "lucide-react";
 
 export default function CommitteeLiveRoom() {
   const [speechTime, setSpeechTime] = useState(90);
   const [timeLeft, setTimeLeft] = useState(90);
   const [isRunning, setIsRunning] = useState(false);
 
+  // Dynamic speaker queue
   const [speakersList, setSpeakersList] = useState<string[]>([
     "United States of America",
-    "United Kingdom",
     "French Republic",
-    "People's Republic of China",
-    "Russian Federation",
+    "United Kingdom",
   ]);
   const [newCountry, setNewCountry] = useState("");
   const [placardRaised, setPlacardRaised] = useState(false);
@@ -55,13 +55,23 @@ export default function CommitteeLiveRoom() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
       <header className="h-16 border-b border-slate-800 px-6 flex items-center justify-between bg-slate-900/50 backdrop-blur">
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-4">
+          <Link href="/" className="text-slate-400 hover:text-white transition">
+            <ArrowLeft className="w-5 h-5" />
+          </Link>
           <div className="px-2.5 py-1 bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-xs font-semibold rounded">
             UNSC
           </div>
-          <h1 className="font-semibold text-sm sm:text-base">Security Council: The Situation in the Arctic</h1>
+          <h1 className="font-semibold text-sm sm:text-base">Security Council: Arctic Security</h1>
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-3">
+          <Link
+            href="/admin"
+            className="flex items-center space-x-1 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium border border-slate-700 transition"
+          >
+            <Shield className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Admin Roster</span>
+          </Link>
           <button
             onClick={() => setPlacardRaised(!placardRaised)}
             className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition ${
@@ -91,7 +101,7 @@ export default function CommitteeLiveRoom() {
             <div className="flex items-center space-x-3 mt-6">
               <button
                 onClick={toggleTimer}
-                className="p-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full transition"
+                className="p-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full transition shadow-lg shadow-indigo-600/30"
               >
                 {isRunning ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
               </button>
@@ -118,7 +128,7 @@ export default function CommitteeLiveRoom() {
             </div>
             <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl">
               <span className="text-xs text-slate-400 font-medium">Active Quorum</span>
-              <p className="text-sm font-semibold mt-1">15 / 15 Delegations</p>
+              <p className="text-sm font-semibold mt-1">15 Delegations</p>
             </div>
             <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl">
               <span className="text-xs text-slate-400 font-medium">Majority Needed</span>
