@@ -1,75 +1,176 @@
-import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import { BookOpen, CheckCircle2, FileText, Mic, Users, ArrowLeft } from "lucide-react";
+"use client";
 
-export default function TrainingPage() {
-  const modules = [
-    {
-      title: "1. Rules of Procedure (RoP) Fundamentals",
-      desc: "Differences between UN4MUN, THIMUN, and North American Parliamentary procedure.",
-      icon: BookOpen,
-      duration: "15 min read",
-    },
-    {
-      title: "2. Structuring Position Papers & Research",
-      desc: "Country policy analysis, UN treaties citation, and policy-aligned solutions.",
-      icon: FileText,
-      duration: "20 min guide",
-    },
-    {
-      title: "3. General Speakers List & Floor Strategy",
-      desc: "Delivering impactful 90-second opening speeches and handling points of inquiry.",
-      icon: Mic,
-      duration: "10 min guide",
-    },
-    {
-      title: "4. Moderated vs. Unmoderated Caucuses",
-      desc: "Forming voting blocs, negotiating working papers, and leading informal consultations.",
-      icon: Users,
-      duration: "25 min simulation",
-    },
-  ];
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Globe2, Mail, Lock, User, ShieldCheck, ArrowRight } from "lucide-react";
+
+export default function AuthPage() {
+  const router = useRouter();
+  const [isLogin, setIsLogin] = useState(true);
+
+  // Form Fields
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("DELEGATE");
+  const [statusMessage, setStatusMessage] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatusMessage("");
+
+    if (isLogin) {
+      // If the email belongs to an administrator/secretariat, route to the admin panel
+      if (email.toLowerCase().includes("admin") || email.toLowerCase().includes("secretariat")) {
+        router.push("/admin");
+      } else {
+        router.push("/training");
+      }
+    } else {
+      // Registration simulated flow
+      setStatusMessage("Account created successfully! Redirecting...");
+      setTimeout(() => {
+        router.push("/training");
+      }, 1000);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 pt-16 flex flex-col">
-      <Navbar />
-
-      <main className="max-w-4xl mx-auto px-6 py-12 flex-1 w-full space-y-8">
-        <div className="flex items-center space-x-3">
-          <Link href="/" className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white">
-            <ArrowLeft className="w-4 h-4" />
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-6">
+      <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl">
+        
+        {/* Brand Header */}
+        <div className="flex flex-col items-center text-center mb-6">
+          <Link href="/" className="flex items-center space-x-2 mb-2">
+            <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center shadow-md shadow-indigo-600/30">
+              <Globe2 className="w-6 h-6 text-white" />
+            </div>
           </Link>
-          <div>
-            <h1 className="text-2xl font-bold text-white">DelegateX Training Academy</h1>
-            <p className="text-xs text-slate-400">Essential resources and simulation guides for aspiring delegates</p>
-          </div>
+          <h2 className="text-2xl font-bold text-white">
+            {isLogin ? "Sign in to DelegateX" : "Create New Account"}
+          </h2>
+          <p className="text-xs text-slate-400 mt-1">
+            {isLogin
+              ? "Access your assigned committee sessions and training"
+              : "Register as a delegate to participate in workshops"}
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {modules.map((m, idx) => {
-            const Icon = m.icon;
-            return (
-              <div
-                key={idx}
-                className="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition space-y-3"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="p-2.5 bg-indigo-500/10 text-indigo-400 rounded-xl border border-indigo-500/20">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <span className="text-[11px] font-mono text-slate-500 bg-slate-950 px-2 py-1 rounded border border-slate-800">
-                    {m.duration}
-                  </span>
-                </div>
-                <div>
-                  <h3 className="text-base font-semibold text-white">{m.title}</h3>
-                  <p className="text-xs text-slate-400 mt-1 leading-relaxed">{m.desc}</p>
+        {/* Tab Switcher */}
+        <div className="grid grid-cols-2 p-1 bg-slate-950 rounded-xl mb-6 border border-slate-800">
+          <button
+            type="button"
+            onClick={() => {
+              setIsLogin(true);
+              setStatusMessage("");
+            }}
+            className={`py-2 text-xs font-semibold rounded-lg transition ${
+              isLogin ? "bg-indigo-600 text-white shadow-sm" : "text-slate-400 hover:text-white"
+            }`}
+          >
+            Sign In
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setIsLogin(false);
+              setStatusMessage("");
+            }}
+            className={`py-2 text-xs font-semibold rounded-lg transition ${
+              !isLogin ? "bg-indigo-600 text-white shadow-sm" : "text-slate-400 hover:text-white"
+            }`}
+          >
+            New User (Register)
+          </button>
+        </div>
+
+        {statusMessage && (
+          <div className="mb-4 p-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl text-xs text-center">
+            {statusMessage}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {!isLogin && (
+            <>
+              <div>
+                <label className="text-xs font-medium text-slate-400 block mb-1">Full Name</label>
+                <div className="relative">
+                  <User className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+                  <input
+                    type="text"
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Jane Doe"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                  />
                 </div>
               </div>
-            );
-          })}
+
+              <div>
+                <label className="text-xs font-medium text-slate-400 block mb-1">Account Role</label>
+                <div className="relative">
+                  <ShieldCheck className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+                  <select
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                  >
+                    <option value="DELEGATE">Delegate</option>
+                    <option value="OBSERVER">Observer / Guest</option>
+                  </select>
+                </div>
+              </div>
+            </>
+          )}
+
+          <div>
+            <label className="text-xs font-medium text-slate-400 block mb-1">Email Address</label>
+            <div className="relative">
+              <Mail className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="user@delegatex.org"
+                className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="text-xs font-medium text-slate-400 block mb-1">Password</label>
+            <div className="relative">
+              <Lock className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-semibold transition mt-2 flex items-center justify-center space-x-1.5 shadow-md shadow-indigo-600/20"
+          >
+            <span>{isLogin ? "Sign In" : "Register Account"}</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </form>
+
+        <div className="mt-6 pt-4 border-t border-slate-800 text-center">
+          <Link href="/" className="text-xs text-indigo-400 hover:underline">
+            ← Return to Homepage
+          </Link>
         </div>
-      </main>
+      </div>
     </div>
   );
 }
