@@ -11,7 +11,7 @@ enum Role {
   DELEGATE
   CHAIR
   SECRETARIAT
-  TRAINER
+  ADMIN
 }
 
 enum AttendanceStatus {
@@ -37,19 +37,20 @@ model Committee {
   name        String              // e.g., "UNSC", "UNGA DISEC"
   topic       String              // e.g., "Militarization of the Arctic"
   isLive      Boolean             @default(false)
-  currentGSL  String[]            // Array of country names in queue
+  currentGSL  String[]            // Array of country names currently queued
   delegates   CommitteeDelegate[]
   createdAt   DateTime            @default(now())
 }
 
 model CommitteeDelegate {
   id           String           @id @default(cuid())
-  userId       String
+  userId       String?
   committeeId  String
-  country      String           // e.g., "France", "Japan"
+  country      String           // Dynamic country name managed by Admin
+  orderIndex   Int              @default(0)
   status       AttendanceStatus @default(ABSENT)
-  user         User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User?            @relation(fields: [userId], references: [id], onDelete: SetNull)
   committee    Committee        @relation(fields: [committeeId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, committeeId])
+  @@unique([committeeId, country])
 }
