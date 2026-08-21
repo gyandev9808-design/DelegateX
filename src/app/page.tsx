@@ -1,36 +1,48 @@
-"use client";
-
 import Link from "next/link";
-import { Globe2, BookOpen, LogIn } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import { ArrowRight, BookOpen } from "lucide-react";
 
-export default function Navbar() {
+export default function LandingPage() {
   return (
-    <header className="h-16 border-b border-slate-800 bg-slate-950/80 backdrop-blur fixed top-0 left-0 right-0 z-50 px-6 flex items-center justify-between">
-      <Link href="/" className="flex items-center space-x-3">
-        <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center shadow-md shadow-indigo-600/30">
-          <Globe2 className="w-5 h-5 text-white" />
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col pt-16">
+      <Navbar />
+
+      <main className="flex-1 flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
+        {/* Background Glow */}
+        <div className="absolute inset-0 -z-10 flex items-center justify-center">
+          <div className="w-[500px] h-[500px] bg-indigo-600/10 blur-[130px] rounded-full pointer-events-none" />
         </div>
-        <span className="font-bold text-lg text-white tracking-tight">
-          Delegate<span className="text-indigo-400">X</span>
-        </span>
-      </Link>
 
-      <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
-        <Link href="/training" className="hover:text-white transition flex items-center space-x-1.5">
-          <BookOpen className="w-4 h-4 text-indigo-400" />
-          <span>Training Modules</span>
-        </Link>
-      </nav>
+        <div className="max-w-3xl space-y-6">
+          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white">
+            Diplomacy & MUN Simulation on{" "}
+            <span className="bg-gradient-to-r from-indigo-400 via-cyan-400 to-indigo-300 bg-clip-text text-transparent">
+              DelegateX
+            </span>
+          </h1>
 
-      <div className="flex items-center space-x-3">
-        <Link
-          href="/auth"
-          className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-medium transition shadow-sm"
-        >
-          <LogIn className="w-4 h-4" />
-          <span>Sign In / Portal</span>
-        </Link>
-      </div>
-    </header>
+          <p className="text-base sm:text-lg text-slate-400 max-w-xl mx-auto leading-relaxed">
+            Access specialized Model UN training modules or sign in to your delegate and secretariat accounts.
+          </p>
+
+          <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link
+              href="/training"
+              className="w-full sm:w-auto px-7 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-xl transition flex items-center justify-center space-x-2 shadow-lg shadow-indigo-600/25"
+            >
+              <BookOpen className="w-4 h-4" />
+              <span>Explore Training Modules</span>
+            </Link>
+            <Link
+              href="/auth"
+              className="w-full sm:w-auto px-7 py-3.5 bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-200 font-medium rounded-xl transition flex items-center justify-center space-x-2"
+            >
+              <span>Sign In / Register</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </main>
+    </div>
   );
 }
