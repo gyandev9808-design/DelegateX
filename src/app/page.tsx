@@ -1,73 +1,36 @@
+"use client";
+
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import { Globe2, Sparkles, BookOpen, Users2, ArrowRight } from "lucide-react";
+import { Globe2, BookOpen, LogIn } from "lucide-react";
 
-export default function LandingPage() {
+export default function Navbar() {
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col pt-16">
-      <Navbar />
-
-      {/* Hero Section */}
-      <section className="relative overflow-hidden py-24 sm:py-32 flex flex-col items-center justify-center text-center px-6">
-        <div className="absolute inset-0 -z-10 flex items-center justify-center">
-          <div className="w-[500px] h-[500px] bg-indigo-600/15 blur-[120px] rounded-full pointer-events-none" />
+    <header className="h-16 border-b border-slate-800 bg-slate-950/80 backdrop-blur fixed top-0 left-0 right-0 z-50 px-6 flex items-center justify-between">
+      <Link href="/" className="flex items-center space-x-3">
+        <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center shadow-md shadow-indigo-600/30">
+          <Globe2 className="w-5 h-5 text-white" />
         </div>
+        <span className="font-bold text-lg text-white tracking-tight">
+          Delegate<span className="text-indigo-400">X</span>
+        </span>
+      </Link>
 
-        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-semibold mb-6">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Next-Generation MUN Simulation Engine</span>
-        </div>
+      <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+        <Link href="/training" className="hover:text-white transition flex items-center space-x-1.5">
+          <BookOpen className="w-4 h-4 text-indigo-400" />
+          <span>Training Modules</span>
+        </Link>
+      </nav>
 
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-4xl text-white">
-          Empowering Next-Gen Diplomats on{" "}
-          <span className="bg-gradient-to-r from-indigo-400 via-cyan-400 to-indigo-300 bg-clip-text text-transparent">
-            DelegateX
-          </span>
-        </h1>
-
-        <p className="mt-6 text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
-          From intensive Rules of Procedure training to dynamic online committee sessions with real-time speaker timers, placard tracking, and customizable debate flow.
-        </p>
-
-        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-md">
-          <Link
-            href="/committee"
-            className="w-full sm:w-auto px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-xl transition flex items-center justify-center space-x-2 shadow-lg shadow-indigo-600/25"
-          >
-            <span>Enter Committee Room</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-          <Link
-            href="/auth"
-            className="w-full sm:w-auto px-8 py-3.5 bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-200 font-medium rounded-xl transition flex items-center justify-center space-x-2"
-          >
-            <span>Sign In / Register</span>
-          </Link>
-        </div>
-      </section>
-
-      {/* Feature Cards Grid */}
-      <section className="max-w-5xl mx-auto px-6 pb-24 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition flex flex-col">
-          <div className="p-3 bg-indigo-500/10 text-indigo-400 w-fit rounded-xl mb-4 border border-indigo-500/20">
-            <BookOpen className="w-6 h-6" />
-          </div>
-          <h3 className="text-lg font-semibold text-white mb-2">Interactive Training</h3>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            Master UN4MUN, THIMUN, and HMUN procedures with guided caucus simulations and real-time speech clocks.
-          </p>
-        </div>
-
-        <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition flex flex-col">
-          <div className="p-3 bg-cyan-500/10 text-cyan-400 w-fit rounded-xl mb-4 border border-cyan-500/20">
-            <Users2 className="w-6 h-6" />
-          </div>
-          <h3 className="text-lg font-semibold text-white mb-2">Real Committee Flow</h3>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            Raise placards, queue in the General Speakers List, yield speech time, and participate in substantive voting.
-          </p>
-        </div>
-      </section>
-    </div>
+      <div className="flex items-center space-x-3">
+        <Link
+          href="/auth"
+          className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-medium transition shadow-sm"
+        >
+          <LogIn className="w-4 h-4" />
+          <span>Sign In / Portal</span>
+        </Link>
+      </div>
+    </header>
   );
 }
