@@ -15,22 +15,22 @@ export default function Navbar() {
         </span>
       </Link>
 
-      <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
-        <Link href="/training" className="hover:text-white transition flex items-center space-x-1.5">
+      <nav className="flex items-center space-x-6 text-sm font-medium text-slate-300">
+        <Link
+          href="/training"
+          className="hover:text-white transition flex items-center space-x-1.5"
+        >
           <BookOpen className="w-4 h-4 text-indigo-400" />
           <span>Training Modules</span>
         </Link>
-      </nav>
-
-      <div className="flex items-center space-x-3">
         <Link
           href="/auth"
           className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-medium transition shadow-sm"
         >
           <LogIn className="w-4 h-4" />
-          <span>Sign In / Portal</span>
+          <span>Sign In / Register</span>
         </Link>
-      </div>
+      </nav>
     </header>
   );
 }
