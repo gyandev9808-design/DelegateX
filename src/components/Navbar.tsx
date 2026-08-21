@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Globe2, LogIn } from "lucide-react";
+import { Globe2, BookOpen, LogIn } from "lucide-react";
 
 export default function Navbar() {
   return (
@@ -16,8 +16,9 @@ export default function Navbar() {
       </Link>
 
       <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
-        <Link href="/committee" className="hover:text-white transition">
-          Live Committee
+        <Link href="/training" className="hover:text-white transition flex items-center space-x-1.5">
+          <BookOpen className="w-4 h-4 text-indigo-400" />
+          <span>Training Modules</span>
         </Link>
       </nav>
 
@@ -27,7 +28,7 @@ export default function Navbar() {
           className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-medium transition shadow-sm"
         >
           <LogIn className="w-4 h-4" />
-          <span>Sign In / Register</span>
+          <span>Sign In / Portal</span>
         </Link>
       </div>
     </header>
