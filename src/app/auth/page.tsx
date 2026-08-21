@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Globe2, Mail, Lock, User, ShieldCheck } from "lucide-react";
 
 export default function AuthPage() {
+  const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -13,8 +15,13 @@ export default function AuthPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Connects directly to NextAuth or API register route
-    alert(`${isLogin ? "Signing in" : "Registering new user"} as ${role} with ${email}`);
+    
+    // Check if role is Admin/Secretariat and route accordingly
+    if (role === "ADMIN" || role === "SECRETARIAT") {
+      router.push("/admin");
+    } else {
+      router.push("/committee");
+    }
   };
 
   return (
@@ -31,8 +38,8 @@ export default function AuthPage() {
           </h2>
           <p className="text-xs text-slate-400 mt-1">
             {isLogin
-              ? "Enter your credentials to enter committee rooms"
-              : "Register as a delegate, chair, or secretariat member"}
+              ? "Enter your credentials to access your session"
+              : "Register as a delegate, chair, or administrator"}
           </p>
         </div>
 
@@ -58,39 +65,37 @@ export default function AuthPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {!isLogin && (
-            <>
-              <div>
-                <label className="text-xs font-medium text-slate-400 block mb-1">Full Name</label>
-                <div className="relative">
-                  <User className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
-                  <input
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Jane Doe"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
-                  />
-                </div>
+            <div>
+              <label className="text-xs font-medium text-slate-400 block mb-1">Full Name</label>
+              <div className="relative">
+                <User className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+                <input
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Jane Doe"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                />
               </div>
-
-              <div>
-                <label className="text-xs font-medium text-slate-400 block mb-1">Account Role</label>
-                <div className="relative">
-                  <ShieldCheck className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
-                  <select
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
-                  >
-                    <option value="DELEGATE">Delegate</option>
-                    <option value="CHAIR">Executive Board / Chair</option>
-                    <option value="SECRETARIAT">Secretariat / Admin</option>
-                  </select>
-                </div>
-              </div>
-            </>
+            </div>
           )}
+
+          <div>
+            <label className="text-xs font-medium text-slate-400 block mb-1">Account Role</label>
+            <div className="relative">
+              <ShieldCheck className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+              >
+                <option value="DELEGATE">Delegate</option>
+                <option value="CHAIR">Executive Board / Chair</option>
+                <option value="ADMIN">Secretariat / Admin</option>
+              </select>
+            </div>
+          </div>
 
           <div>
             <label className="text-xs font-medium text-slate-400 block mb-1">Email Address</label>
