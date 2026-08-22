@@ -9,11 +9,9 @@ export default function AuthPage() {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
 
-  // Form Fields
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("DELEGATE");
   const [statusMessage, setStatusMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -25,28 +23,27 @@ export default function AuthPage() {
     const normalizedEmail = email.trim().toLowerCase();
 
     if (isLogin) {
-      // Hardcoded check for Master Admin account
+      // 1. Master Admin check
       if (normalizedEmail === "admin@delegatex.org" && password === "Secretariat2026!") {
         router.push("/admin");
         return;
       }
 
-      // Check if user is standard admin/secretariat
+      // 2. Staff / Secretariat check
       if (normalizedEmail.includes("admin") || normalizedEmail.includes("secretariat")) {
         router.push("/admin");
         return;
       }
 
-      // Standard user login -> redirect to home/portal
-      router.push("/");
+      // 3. Delegate / Student check -> goes to /dashboard
+      router.push("/dashboard");
     } else {
-      // Prevent unauthorized creation of admin accounts via public registration
       if (normalizedEmail === "admin@delegatex.org") {
         setErrorMessage("This email is reserved for the Master Admin account.");
         return;
       }
 
-      setStatusMessage("Account registered successfully! You can now sign in.");
+      setStatusMessage("Account registered successfully! Please sign in.");
       setIsLogin(true);
       setPassword("");
     }
@@ -55,8 +52,6 @@ export default function AuthPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-6">
       <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl">
-        
-        {/* Brand Header */}
         <div className="flex flex-col items-center text-center mb-6">
           <Link href="/" className="flex items-center space-x-2 mb-2">
             <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center shadow-md shadow-indigo-600/30">
@@ -68,12 +63,11 @@ export default function AuthPage() {
           </h2>
           <p className="text-xs text-slate-400 mt-1">
             {isLogin
-              ? "Access your assigned session or admin dashboard"
+              ? "Access your student or admin dashboard"
               : "Register as a delegate on the platform"}
           </p>
         </div>
 
-        {/* Tab Switcher */}
         <div className="grid grid-cols-2 p-1 bg-slate-950 rounded-xl mb-6 border border-slate-800">
           <button
             type="button"
@@ -119,37 +113,20 @@ export default function AuthPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {!isLogin && (
-            <>
-              <div>
-                <label className="text-xs font-medium text-slate-400 block mb-1">Full Name</label>
-                <div className="relative">
-                  <User className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
-                  <input
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Jane Doe"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
-                  />
-                </div>
+            <div>
+              <label className="text-xs font-medium text-slate-400 block mb-1">Full Name</label>
+              <div className="relative">
+                <User className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+                <input
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Jane Doe"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                />
               </div>
-
-              <div>
-                <label className="text-xs font-medium text-slate-400 block mb-1">Account Role</label>
-                <div className="relative">
-                  <ShieldCheck className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
-                  <select
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
-                  >
-                    <option value="DELEGATE">Delegate</option>
-                    <option value="OBSERVER">Observer / Guest</option>
-                  </select>
-                </div>
-              </div>
-            </>
+            </div>
           )}
 
           <div>
