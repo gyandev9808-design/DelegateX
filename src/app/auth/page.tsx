@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Globe2, Mail, Lock, User, ShieldCheck, ArrowRight } from "lucide-react";
+import { Globe2, Mail, Lock, User, ShieldCheck, ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
 
 export default function AuthPage() {
   const router = useRouter();
@@ -15,24 +15,40 @@ export default function AuthPage() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("DELEGATE");
   const [statusMessage, setStatusMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setStatusMessage("");
+    setErrorMessage("");
+
+    const normalizedEmail = email.trim().toLowerCase();
 
     if (isLogin) {
-      // If the email belongs to an administrator/secretariat, route to the admin panel
-      if (email.toLowerCase().includes("admin") || email.toLowerCase().includes("secretariat")) {
+      // Hardcoded check for Master Admin account
+      if (normalizedEmail === "admin@delegatex.org" && password === "Secretariat2026!") {
         router.push("/admin");
-      } else {
-        router.push("/training");
+        return;
       }
+
+      // Check if user is standard admin/secretariat
+      if (normalizedEmail.includes("admin") || normalizedEmail.includes("secretariat")) {
+        router.push("/admin");
+        return;
+      }
+
+      // Standard user login -> redirect to home/portal
+      router.push("/");
     } else {
-      // Registration simulated flow
-      setStatusMessage("Account created successfully! Redirecting...");
-      setTimeout(() => {
-        router.push("/training");
-      }, 1000);
+      // Prevent unauthorized creation of admin accounts via public registration
+      if (normalizedEmail === "admin@delegatex.org") {
+        setErrorMessage("This email is reserved for the Master Admin account.");
+        return;
+      }
+
+      setStatusMessage("Account registered successfully! You can now sign in.");
+      setIsLogin(true);
+      setPassword("");
     }
   };
 
@@ -52,8 +68,8 @@ export default function AuthPage() {
           </h2>
           <p className="text-xs text-slate-400 mt-1">
             {isLogin
-              ? "Access your assigned committee sessions and training"
-              : "Register as a delegate to participate in workshops"}
+              ? "Access your assigned session or admin dashboard"
+              : "Register as a delegate on the platform"}
           </p>
         </div>
 
@@ -64,6 +80,7 @@ export default function AuthPage() {
             onClick={() => {
               setIsLogin(true);
               setStatusMessage("");
+              setErrorMessage("");
             }}
             className={`py-2 text-xs font-semibold rounded-lg transition ${
               isLogin ? "bg-indigo-600 text-white shadow-sm" : "text-slate-400 hover:text-white"
@@ -76,6 +93,7 @@ export default function AuthPage() {
             onClick={() => {
               setIsLogin(false);
               setStatusMessage("");
+              setErrorMessage("");
             }}
             className={`py-2 text-xs font-semibold rounded-lg transition ${
               !isLogin ? "bg-indigo-600 text-white shadow-sm" : "text-slate-400 hover:text-white"
@@ -86,8 +104,16 @@ export default function AuthPage() {
         </div>
 
         {statusMessage && (
-          <div className="mb-4 p-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl text-xs text-center">
-            {statusMessage}
+          <div className="mb-4 p-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl text-xs flex items-center space-x-2">
+            <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
+            <span>{statusMessage}</span>
+          </div>
+        )}
+
+        {errorMessage && (
+          <div className="mb-4 p-3 bg-rose-500/10 border border-rose-500/20 text-rose-400 rounded-xl text-xs flex items-center space-x-2">
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <span>{errorMessage}</span>
           </div>
         )}
 
@@ -135,7 +161,7 @@ export default function AuthPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="user@delegatex.org"
+                placeholder="admin@delegatex.org or delegate@mun.org"
                 className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
               />
             </div>
