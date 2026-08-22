@@ -5,20 +5,33 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   BookOpen,
+  FileText,
   Video,
+  Award,
+  Calendar,
+  Clock,
+  Mail,
+  Newspaper,
+  Image as ImageIcon,
+  CheckCircle2,
+  Mic,
+  MessageSquare,
   KeyRound,
   ArrowRight,
-  Award,
-  FileText,
-  Clock,
+  Search,
+  Bell,
   LogOut,
-  Globe2,
-  CheckCircle2,
+  Hand,
+  FolderOpen,
+  Library,
+  Radio,
+  FileCheck,
 } from "lucide-react";
 
-export default function StudentDashboard() {
+export default function DelegateDashboard() {
   const router = useRouter();
   const [roomCode, setRoomCode] = useState("");
+  const [placardRaised, setPlacardRaised] = useState(false);
 
   const handleJoinSession = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,201 +39,233 @@ export default function StudentDashboard() {
     router.push(`/room/${roomCode.trim().toUpperCase()}`);
   };
 
-  const trainingModules = [
-    {
-      id: "rop-101",
-      title: "Rules of Procedure (RoP) Fundamentals",
-      progress: 100,
-      status: "Completed",
-      totalLessons: 6,
-    },
-    {
-      id: "pos-paper",
-      title: "Position Paper Writing & Policy Research",
-      progress: 65,
-      status: "In Progress",
-      totalLessons: 4,
-    },
-    {
-      id: "speech-drafting",
-      title: "Opening Speech & GSL Mastery",
-      progress: 20,
-      status: "In Progress",
-      totalLessons: 5,
-    },
-  ];
-
-  const upcomingSessions = [
-    {
-      id: "1",
-      code: "UNSC-ARCTIC-2026",
-      committee: "UN Security Council",
-      topic: "Arctic Maritime Security & Boundary Claims",
-      time: "Tomorrow, 5:00 PM IST",
-      type: "Live Simulation",
-    },
-    {
-      id: "2",
-      code: "TRAIN-ROP-01",
-      committee: "THIMUN Caucus Workshop",
-      topic: "Drafting Operative Clauses & Amendments",
-      time: "Thursday, 6:30 PM IST",
-      type: "Training Session",
-    },
-  ];
-
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 p-6 flex flex-col items-center">
-      <div className="w-full max-w-5xl space-y-8">
-        {/* Header */}
-        <header className="flex items-center justify-between border-b border-slate-800 pb-5">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center shadow-md shadow-indigo-600/30">
-              <Globe2 className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-white">Delegate Portal</h1>
-              <p className="text-xs text-slate-400">Welcome back, Delegate</p>
-            </div>
+    <div className="min-h-screen bg-slate-100 text-slate-900 flex flex-col">
+      {/* Top Profile Header Bar (Matching screenshot header) */}
+      <header className="bg-slate-800 text-white px-5 py-4 flex items-center justify-between sticky top-0 z-40 shadow-sm">
+        <div className="flex items-center space-x-3">
+          <div className="w-12 h-12 rounded-full bg-indigo-500 border-2 border-slate-600 flex items-center justify-center font-bold text-white text-base">
+            DX
           </div>
-          <div className="flex items-center space-x-3">
-            <Link
-              href="/training"
-              className="hidden sm:flex items-center space-x-1.5 px-3.5 py-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium transition"
-            >
-              <BookOpen className="w-4 h-4 text-indigo-400" />
-              <span>All Modules</span>
-            </Link>
-            <Link
-              href="/auth"
-              className="flex items-center space-x-1.5 px-3.5 py-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-rose-400 text-xs font-medium transition"
-            >
-              <LogOut className="w-4 h-4" />
-              <span>Sign Out</span>
-            </Link>
+          <div>
+            <h1 className="text-base font-semibold leading-tight">Delegate User</h1>
+            <p className="text-xs text-slate-300">UNSC • Del-4606</p>
           </div>
-        </header>
+        </div>
 
-        {/* Top Action: Quick Join Live Session */}
-        <section className="bg-gradient-to-r from-indigo-950/60 to-slate-900 border border-indigo-500/30 rounded-2xl p-6 shadow-xl">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div>
-              <span className="px-2.5 py-1 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded text-[11px] font-semibold">
-                Live Simulation Entry
-              </span>
-              <h2 className="text-lg font-bold text-white mt-2">Join a Live Committee Room</h2>
-              <p className="text-xs text-slate-400">
-                Enter the room code issued by your Executive Board or Secretariat.
-              </p>
+        <div className="flex items-center space-x-3 text-slate-200">
+          <button className="p-2 hover:bg-slate-700 rounded-full transition">
+            <Search className="w-5 h-5" />
+          </button>
+          <button className="p-2 hover:bg-slate-700 rounded-full transition relative">
+            <Bell className="w-5 h-5" />
+            <span className="w-2 h-2 bg-indigo-400 rounded-full absolute top-1.5 right-1.5" />
+          </button>
+          <Link href="/auth" className="p-2 hover:bg-slate-700 rounded-full transition text-rose-300">
+            <LogOut className="w-5 h-5" />
+          </Link>
+        </div>
+      </header>
+
+      {/* Main Responsive Split Layout */}
+      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+        
+        {/* LEFT / CENTER (2 cols on PC): Category Icon Grids */}
+        <div className="lg:col-span-2 space-y-6 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          
+          {/* SECTION 1: RECENTLY USED */}
+          <section className="space-y-3">
+            <h2 className="text-xs uppercase font-bold tracking-wider text-slate-800">
+              Recently Used
+            </h2>
+            <div className="grid grid-cols-4 gap-4 text-center">
+              <Link href="/training" className="flex flex-col items-center group">
+                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition shadow-sm">
+                  <FileText className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-medium text-slate-700 mt-2">RoP Rules</span>
+              </Link>
+
+              <Link href="/training" className="flex flex-col items-center group">
+                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition shadow-sm">
+                  <MessageSquare className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-medium text-slate-700 mt-2">Speech Draft</span>
+              </Link>
+
+              <Link href="/training" className="flex flex-col items-center group">
+                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition shadow-sm">
+                  <BookOpen className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-medium text-slate-700 mt-2">Coursework</span>
+              </Link>
+
+              <Link href="/training" className="flex flex-col items-center group">
+                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition shadow-sm">
+                  <FileCheck className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-medium text-slate-700 mt-2">Resolutions</span>
+              </Link>
             </div>
-            <form onSubmit={handleJoinSession} className="flex gap-2 w-full md:w-auto">
-              <div className="relative flex-1 md:w-64">
-                <KeyRound className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
-                <input
-                  type="text"
-                  value={roomCode}
-                  onChange={(e) => setRoomCode(e.target.value)}
-                  placeholder="Code (e.g. UNSC-01)"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-mono uppercase"
-                />
+          </section>
+
+          <hr className="border-slate-100" />
+
+          {/* SECTION 2: ACADEMICS & TRAINING */}
+          <section className="space-y-3">
+            <h2 className="text-xs uppercase font-bold tracking-wider text-slate-800">
+              Training & Academics
+            </h2>
+            <div className="grid grid-cols-4 gap-y-5 gap-x-3 text-center">
+              <Link href="/training" className="flex flex-col items-center group">
+                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition shadow-sm">
+                  <Award className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-medium text-slate-700 mt-2">Achievements</span>
+              </Link>
+
+              <div className="flex flex-col items-center group cursor-pointer">
+                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition shadow-sm">
+                  <Calendar className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-medium text-slate-700 mt-2">Roll Call</span>
               </div>
+
+              <Link href="/training" className="flex flex-col items-center group">
+                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition shadow-sm">
+                  <Library className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-medium text-slate-700 mt-2">UN Library</span>
+              </Link>
+
+              <div className="flex flex-col items-center group cursor-pointer">
+                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition shadow-sm">
+                  <Clock className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-medium text-slate-700 mt-2">Caucus Hours</span>
+              </div>
+
+              <div className="flex flex-col items-center group cursor-pointer">
+                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition shadow-sm">
+                  <Mic className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-medium text-slate-700 mt-2">GSL Speech</span>
+              </div>
+
+              <div className="flex flex-col items-center group cursor-pointer">
+                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition shadow-sm">
+                  <CheckCircle2 className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-medium text-slate-700 mt-2">EB Remarks</span>
+              </div>
+
+              <div className="flex flex-col items-center group cursor-pointer">
+                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition shadow-sm">
+                  <FolderOpen className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-medium text-slate-700 mt-2">Position Papers</span>
+              </div>
+
+              <Link href="/training" className="flex flex-col items-center group">
+                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition shadow-sm">
+                  <FileText className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-medium text-slate-700 mt-2">Syllabus</span>
+              </Link>
+            </div>
+          </section>
+
+          <hr className="border-slate-100" />
+
+          {/* SECTION 3: COMMUNICATION & SESSIONS */}
+          <section className="space-y-3">
+            <h2 className="text-xs uppercase font-bold tracking-wider text-slate-800">
+              Communication & Secretariat
+            </h2>
+            <div className="grid grid-cols-4 gap-y-5 gap-x-3 text-center">
+              <div className="flex flex-col items-center group cursor-pointer">
+                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition shadow-sm">
+                  <Mail className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-medium text-slate-700 mt-2">Chits / Mail</span>
+              </div>
+
+              <div className="flex flex-col items-center group cursor-pointer">
+                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition shadow-sm">
+                  <Calendar className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-medium text-slate-700 mt-2">Schedule</span>
+              </div>
+
+              <div className="flex flex-col items-center group cursor-pointer">
+                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition shadow-sm">
+                  <Newspaper className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-medium text-slate-700 mt-2">Crisis News</span>
+              </div>
+
+              <div className="flex flex-col items-center group cursor-pointer">
+                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition shadow-sm">
+                  <ImageIcon className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-medium text-slate-700 mt-2">Gallery</span>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        {/* RIGHT HAND SIDE (PC): Quick Actions & Room Entry */}
+        <aside className="space-y-4 lg:sticky lg:top-20">
+          
+          {/* Quick Room Code Entry Box */}
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3">
+            <h2 className="text-sm font-bold text-slate-900 flex items-center space-x-2">
+              <KeyRound className="w-4 h-4 text-indigo-600" />
+              <span>Join Live Committee Room</span>
+            </h2>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Paste the room invite code provided by your Chair or Secretariat.
+            </p>
+
+            <form onSubmit={handleJoinSession} className="space-y-2">
+              <input
+                type="text"
+                value={roomCode}
+                onChange={(e) => setRoomCode(e.target.value)}
+                placeholder="Code (e.g. UNSC-2026)"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 font-mono uppercase"
+              />
               <button
                 type="submit"
-                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-xl transition flex items-center space-x-1.5 shadow-md shadow-indigo-600/20"
+                className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-xl text-xs transition flex items-center justify-center space-x-1.5 shadow-sm"
               >
-                <span>Join</span>
+                <span>Enter Live Session</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </form>
           </div>
-        </section>
 
-        {/* Main Grid: Training Progress & Assigned Sessions */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left 2 Cols: Training Courses */}
-          <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-white flex items-center space-x-2">
-                <BookOpen className="w-4 h-4 text-indigo-400" />
-                <span>My Training Progress</span>
-              </h3>
-              <Link href="/training" className="text-xs text-indigo-400 hover:underline">
-                View curriculum →
-              </Link>
-            </div>
+          {/* Placard & Quick Delegate Action */}
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3">
+            <span className="text-[11px] uppercase font-bold tracking-wider text-slate-500 block">
+              Floor Control
+            </span>
 
-            <div className="space-y-3">
-              {trainingModules.map((module) => (
-                <div
-                  key={module.id}
-                  className="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="text-sm font-semibold text-white">{module.title}</h4>
-                      <span className="text-xs text-slate-400">{module.totalLessons} lessons</span>
-                    </div>
-                    <span
-                      className={`text-xs px-2.5 py-1 rounded font-medium ${
-                        module.progress === 100
-                          ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                          : "bg-indigo-500/10 text-indigo-400 border border-indigo-500/20"
-                      }`}
-                    >
-                      {module.progress === 100 ? "Completed" : `${module.progress}%`}
-                    </span>
-                  </div>
-
-                  {/* Progress Bar */}
-                  <div className="w-full bg-slate-950 rounded-full h-1.5 border border-slate-800">
-                    <div
-                      className="bg-indigo-500 h-1.5 rounded-full transition-all duration-300"
-                      style={{ width: `${module.progress}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
+            <button
+              onClick={() => setPlacardRaised(!placardRaised)}
+              className={`w-full flex items-center justify-center space-x-2 py-3 rounded-xl text-xs font-semibold transition ${
+                placardRaised
+                  ? "bg-amber-500 text-slate-950 hover:bg-amber-400 shadow-md shadow-amber-500/20"
+                  : "bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200"
+              }`}
+            >
+              <Hand className="w-4 h-4" />
+              <span>{placardRaised ? "Placard Raised (Active)" : "Raise Placard"}</span>
+            </button>
           </div>
+        </aside>
 
-          {/* Right Col: Scheduled Live Sessions */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold text-white flex items-center space-x-2">
-              <Video className="w-4 h-4 text-cyan-400" />
-              <span>Upcoming Committee Meetings</span>
-            </h3>
-
-            <div className="space-y-3">
-              {upcomingSessions.map((session) => (
-                <div
-                  key={session.id}
-                  className="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-2 flex flex-col justify-between"
-                >
-                  <div>
-                    <span className="text-[10px] font-mono uppercase text-indigo-400">
-                      {session.type}
-                    </span>
-                    <h4 className="text-sm font-semibold text-white mt-0.5">{session.committee}</h4>
-                    <p className="text-xs text-slate-400 mt-1 line-clamp-1">{session.topic}</p>
-                  </div>
-                  <div className="flex items-center justify-between pt-2 border-t border-slate-800/80">
-                    <div className="flex items-center space-x-1.5 text-slate-400 text-xs">
-                      <Clock className="w-3.5 h-3.5" />
-                      <span>{session.time}</span>
-                    </div>
-                    <Link
-                      href={`/room/${session.code}`}
-                      className="px-2.5 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded text-xs font-semibold transition"
-                    >
-                      Enter
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+      </main>
     </div>
   );
 }
