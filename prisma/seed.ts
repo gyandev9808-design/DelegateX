@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 async function main() {
   const adminEmail = "admin@delegatex.org";
-  const rawPassword = "Secretariat2026!";
+  const rawPassword = "VivaanCedar";
   const passwordHash = await bcrypt.hash(rawPassword, 10);
 
   await prisma.user.upsert({
