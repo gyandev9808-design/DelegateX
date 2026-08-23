@@ -23,20 +23,19 @@ export default function AuthPage() {
     const normalizedEmail = email.trim().toLowerCase();
 
     if (isLogin) {
-      // 1. Master Admin check
+      // Master Admin login
       if (normalizedEmail === "admin@delegatex.org" && password === "Secretariat2026!") {
         router.push("/admin");
         return;
       }
 
-      // 2. Staff / Secretariat check
-      if (normalizedEmail.includes("admin") || normalizedEmail.includes("secretariat")) {
-        router.push("/admin");
+      // Demo delegate login for the frontend-only experience.
+      if (normalizedEmail === "delegate@mun.org" && password === "Delegate2026!") {
+        router.push("/dashboard");
         return;
       }
 
-      // 3. Delegate / Student check -> goes to /dashboard
-      router.push("/dashboard");
+      setErrorMessage("Incorrect email or password. Please check your details and try again.");
     } else {
       if (normalizedEmail === "admin@delegatex.org") {
         setErrorMessage("This email is reserved for the Master Admin account.");
