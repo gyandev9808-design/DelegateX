@@ -36,6 +36,12 @@ export default function DelegateDashboard() {
   const [roomCode, setRoomCode] = useState("");
   const [placardRaised, setPlacardRaised] = useState(false);
   const [greeting, setGreeting] = useState("Good day");
+  const [notice, setNotice] = useState("");
+
+  const showNotice = (message: string) => {
+    setNotice(message);
+    window.setTimeout(() => setNotice(""), 2500);
+  };
 
   useEffect(() => {
     const updateGreeting = () => {
@@ -70,10 +76,10 @@ export default function DelegateDashboard() {
         </div>
 
         <div className="flex items-center space-x-3 text-slate-200">
-          <button className="p-2 hover:bg-slate-600 rounded-full transition">
+          <button onClick={() => showNotice("Search is ready for your workspace.")} aria-label="Search" className="p-2 hover:bg-slate-600 rounded-full transition">
             <Search className="w-5 h-5" />
           </button>
-          <button className="p-2 hover:bg-slate-600 rounded-full transition relative">
+          <button onClick={() => showNotice("You are all caught up.")} aria-label="Notifications" className="p-2 hover:bg-slate-600 rounded-full transition relative">
             <Bell className="w-5 h-5" />
             <span className="w-2 h-2 bg-indigo-400 rounded-full absolute top-1.5 right-1.5" />
           </button>
@@ -135,12 +141,12 @@ export default function DelegateDashboard() {
                 <span className="text-xs font-medium text-slate-700 mt-2">Syllabus</span>
               </Link>
 
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("SMS history will appear here after your first message.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <MessageSquare className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">SMS History</span>
-              </div>
+              </button>
 
               <Link href="/training" className="flex flex-col items-center group">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
@@ -149,12 +155,12 @@ export default function DelegateDashboard() {
                 <span className="text-xs font-medium text-slate-700 mt-2">Homework</span>
               </Link>
 
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("No circulars are available yet.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <FileCheck className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Circulars</span>
-              </div>
+              </button>
             </div>
           </section>
 
@@ -173,12 +179,12 @@ export default function DelegateDashboard() {
                 <span className="text-xs font-medium text-slate-700 mt-2">Achievements</span>
               </Link>
 
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("Attendance records will appear after your first session.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Calendar className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Attendance</span>
-              </div>
+              </button>
 
               <Link href="/training" className="flex flex-col items-center group">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
@@ -187,33 +193,33 @@ export default function DelegateDashboard() {
                 <span className="text-xs font-medium text-slate-700 mt-2">Homework</span>
               </Link>
 
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("Hostel attendance is not available yet.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Clock className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Hostel Attendance</span>
-              </div>
+              </button>
 
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("Performance tracking is coming soon.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Mic className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Performance</span>
-              </div>
+              </button>
 
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("No remarks have been posted yet.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Remarks</span>
-              </div>
+              </button>
 
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("Results will appear after an assessment.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <FolderOpen className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Results</span>
-              </div>
+              </button>
 
               <Link href="/training" className="flex flex-col items-center group">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
@@ -232,33 +238,33 @@ export default function DelegateDashboard() {
               Communication
             </h2>
             <div className="grid grid-cols-4 gap-y-5 gap-x-3 text-center">
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("Your mailbox is empty.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Mail className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Mail Box</span>
-              </div>
+              </button>
 
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("Your calendar has no upcoming events.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Calendar className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Calendar</span>
-              </div>
+              </button>
 
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("No school news has been posted yet.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Newspaper className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">School News</span>
-              </div>
+              </button>
 
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("The image gallery is empty.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <ImageIcon className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Image Gallery</span>
-              </div>
+              </button>
             </div>
           </section>
         </div>
@@ -313,6 +319,11 @@ export default function DelegateDashboard() {
         </aside>
 
       </main>
+      {notice && (
+        <div role="status" className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded-xl bg-slate-900 px-4 py-3 text-xs font-medium text-white shadow-xl">
+          {notice}
+        </div>
+      )}
     </div>
   );
 }

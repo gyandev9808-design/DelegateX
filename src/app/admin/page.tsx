@@ -42,6 +42,12 @@ interface MeetingRoom {
 export default function AdminDashboard() {
   const [activeModal, setActiveModal] = useState<"MEETING" | "STAFF" | "ROSTER" | null>(null);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+  const [notice, setNotice] = useState("");
+
+  const showNotice = (message: string) => {
+    setNotice(message);
+    window.setTimeout(() => setNotice(""), 2500);
+  };
 
   // State Management
   const [staffList, setStaffList] = useState<StaffAccount[]>([
@@ -122,10 +128,10 @@ export default function AdminDashboard() {
         </div>
 
         <div className="flex items-center space-x-3 text-slate-200">
-          <button className="p-2 hover:bg-slate-600 rounded-full transition">
+          <button onClick={() => showNotice("Search is ready for your workspace.")} aria-label="Search" className="p-2 hover:bg-slate-600 rounded-full transition">
             <Search className="w-5 h-5" />
           </button>
-          <button className="p-2 hover:bg-slate-600 rounded-full transition relative">
+          <button onClick={() => showNotice("You are all caught up.")} aria-label="Notifications" className="p-2 hover:bg-slate-600 rounded-full transition relative">
             <Bell className="w-5 h-5" />
             <span className="w-2 h-2 bg-indigo-400 rounded-full absolute top-1.5 right-1.5" />
           </button>
@@ -168,12 +174,12 @@ export default function AdminDashboard() {
                 <span className="text-xs font-medium text-slate-700 mt-2">Country Roster</span>
               </button>
 
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("Circulars are ready to be configured.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <FileCheck className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Circulars</span>
-              </div>
+              </button>
             </div>
           </section>
 
@@ -185,33 +191,33 @@ export default function AdminDashboard() {
               Secretariat & Oversight
             </h2>
             <div className="grid grid-cols-4 gap-y-5 gap-x-3 text-center">
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("Awards and certificates are ready to be configured.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Award className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Awards & Certs</span>
-              </div>
+              </button>
 
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("Roll call lists are ready to be configured.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Calendar className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Roll Call List</span>
-              </div>
+              </button>
 
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("Delegate management is ready to be connected.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Users className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Delegates (120)</span>
-              </div>
+              </button>
 
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("Committee management is ready to be connected.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Layers className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Committees</span>
-              </div>
+              </button>
             </div>
           </section>
 
@@ -223,19 +229,19 @@ export default function AdminDashboard() {
               Communication & Broadcast
             </h2>
             <div className="grid grid-cols-4 gap-y-5 gap-x-3 text-center">
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("Broadcast messaging is ready to be configured.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Mail className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Broadcast SMS</span>
-              </div>
+              </button>
 
-              <div className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => showNotice("Rules of Procedure settings are ready to be configured.")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Settings className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">RoP Config</span>
-              </div>
+              </button>
             </div>
           </section>
         </div>
@@ -323,6 +329,11 @@ export default function AdminDashboard() {
         </aside>
 
       </main>
+      {notice && (
+        <div role="status" className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded-xl bg-slate-900 px-4 py-3 text-xs font-medium text-white shadow-xl">
+          {notice}
+        </div>
+      )}
     </div>
   );
 }
