@@ -38,6 +38,7 @@ interface MeetingRoom {
   title: string;
   topic: string;
   type: "LIVE_COMMITTEE" | "TRAINING";
+  googleMeetUrl: string;
 }
 
 export default function AdminDashboard() {
@@ -68,6 +69,7 @@ export default function AdminDashboard() {
       title: "UNSC: Situation in Arctic",
       topic: "Militarization & Navigation",
       type: "LIVE_COMMITTEE",
+      googleMeetUrl: "https://meet.google.com/example-arctic",
     },
     {
       id: "2",
@@ -75,10 +77,12 @@ export default function AdminDashboard() {
       title: "THIMUN RoP Masterclass",
       topic: "Resolution Drafting",
       type: "TRAINING",
+      googleMeetUrl: "https://meet.google.com/example-training",
     },
   ]);
   const [newMeetingTitle, setNewMeetingTitle] = useState("");
   const [newMeetingTopic, setNewMeetingTopic] = useState("");
+  const [newMeetingUrl, setNewMeetingUrl] = useState("");
   const [newMeetingType, setNewMeetingType] = useState<"LIVE_COMMITTEE" | "TRAINING">("LIVE_COMMITTEE");
 
   const [countries, setCountries] = useState<string[]>([
@@ -92,7 +96,13 @@ export default function AdminDashboard() {
 
   const handleCreateMeeting = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newMeetingTitle.trim()) return;
+    if (!newMeetingTitle.trim() || !newMeetingUrl.trim()) return;
+    try {
+      const meetingUrl = new URL(newMeetingUrl.trim());
+      if (meetingUrl.hostname !== "meet.google.com") return;
+    } catch {
+      return;
+    }
     const generatedCode = `${newMeetingTitle.substring(0, 4).toUpperCase().replace(/[^A-Z]/g, "MUN")}-${Math.floor(1000 + Math.random() * 9000)}`;
     setMeetings([
       {
@@ -101,11 +111,13 @@ export default function AdminDashboard() {
         title: newMeetingTitle.trim(),
         topic: newMeetingTopic.trim() || "General Debate",
         type: newMeetingType,
+        googleMeetUrl: newMeetingUrl.trim(),
       },
       ...meetings,
     ]);
     setNewMeetingTitle("");
     setNewMeetingTopic("");
+    setNewMeetingUrl("");
   };
 
   const copyMeetingLink = (code: string) => {
@@ -295,6 +307,15 @@ export default function AdminDashboard() {
                 className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-700"
               />
               <input
+                type="url"
+                required
+                value={newMeetingUrl}
+                onChange={(e) => setNewMeetingUrl(e.target.value)}
+                placeholder="Google Meet URL (https://meet.google.com/...)"
+                pattern="https://meet\\.google\\.com/.*"
+                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-700"
+              />
+              <input
                 type="text"
                 value={newMeetingTopic}
                 onChange={(e) => setNewMeetingTopic(e.target.value)}
@@ -347,6 +368,9 @@ export default function AdminDashboard() {
                   >
                     Join
                   </Link>
+                  <a href={m.googleMeetUrl} target="_blank" rel="noreferrer" className="px-2.5 py-1 bg-emerald-600 text-white rounded-lg text-xs font-medium hover:bg-emerald-500 transition">
+                    Meet
+                  </a>
                 </div>
               </div>
             ))}
@@ -378,13 +402,14 @@ export default function AdminDashboard() {
                 <form onSubmit={(e) => { handleCreateMeeting(e); setActiveModal(null); }} className="space-y-2">
                   <input required value={newMeetingTitle} onChange={(e) => setNewMeetingTitle(e.target.value)} placeholder="Committee title" className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900" />
                   <input value={newMeetingTopic} onChange={(e) => setNewMeetingTopic(e.target.value)} placeholder="Agenda or topic" className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900" />
+                  <input required type="url" value={newMeetingUrl} onChange={(e) => setNewMeetingUrl(e.target.value)} placeholder="Google Meet URL" pattern="https://meet\\.google\\.com/.*" className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900" />
                   <button type="submit" className="w-full rounded-lg bg-slate-800 py-2.5 text-sm font-semibold text-white hover:bg-slate-700">Create meeting</button>
                 </form>
                 <div className="space-y-2 border-t border-slate-100 pt-4">
                   {meetings.map((meeting) => (
                     <div key={meeting.id} className="flex items-center justify-between rounded-lg bg-slate-50 p-3">
                       <div><p className="text-sm font-semibold text-slate-900">{meeting.title}</p><p className="font-mono text-xs text-slate-500">{meeting.code}</p></div>
-                      <Link onClick={() => setActiveModal(null)} href={`/room/${meeting.code}`} className="rounded-md bg-slate-800 px-3 py-1.5 text-xs font-medium text-white">Open</Link>
+                      <div className="flex gap-2"><Link onClick={() => setActiveModal(null)} href={`/room/${meeting.code}`} className="rounded-md bg-slate-800 px-3 py-1.5 text-xs font-medium text-white">Open room</Link><a href={meeting.googleMeetUrl} target="_blank" rel="noreferrer" className="rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white">Meet</a></div>
                     </div>
                   ))}
                 </div>
