@@ -8,10 +8,10 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "prisma": "prisma",
-    "prisma:seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "prisma:seed": "ts-node --compiler-options \"{\\\"module\\\":\\\"CommonJS\\\"}\" prisma/seed.ts"
   },
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "seed": "ts-node --compiler-options \"{\\\"module\\\":\\\"CommonJS\\\"}\" prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.19.1",
@@ -32,5 +32,10 @@
     "tailwindcss": "^3.4.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
+  },
+  "allowScripts": {
+    "@prisma/client@5.22.0": true,
+    "@prisma/engines@5.22.0": true,
+    "prisma@5.22.0": true
   }
 }

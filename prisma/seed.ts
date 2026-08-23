@@ -19,7 +19,21 @@ async function main() {
     },
   });
 
-  console.log("Master Admin user seeded successfully.");
+  const delegateEmail = "delegate@mun.org";
+  const delegatePasswordHash = await bcrypt.hash("Delegate2026!", 10);
+
+  await prisma.user.upsert({
+    where: { email: delegateEmail },
+    update: {},
+    create: {
+      name: "Vivaan Chawla",
+      email: delegateEmail,
+      passwordHash: delegatePasswordHash,
+      role: "DELEGATE",
+    },
+  });
+
+  console.log("Master Admin and delegate users seeded successfully.");
 }
 
 main()
