@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -25,12 +25,28 @@ import {
   FolderOpen,
   Library,
   FileCheck,
+  LayoutDashboard,
+  UserRound,
+  Settings,
+  Sun,
 } from "lucide-react";
 
 export default function DelegateDashboard() {
   const router = useRouter();
   const [roomCode, setRoomCode] = useState("");
   const [placardRaised, setPlacardRaised] = useState(false);
+  const [greeting, setGreeting] = useState("Good day");
+
+  useEffect(() => {
+    const updateGreeting = () => {
+      const hour = new Date().getHours();
+      setGreeting(hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening");
+    };
+
+    updateGreeting();
+    const timer = window.setInterval(updateGreeting, 60_000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   const handleJoinSession = (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,10 +84,43 @@ export default function DelegateDashboard() {
       </header>
 
       {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+      <main className="flex-1 max-w-[1440px] w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)_300px] gap-6 items-start">
+        {/* Desktop navigation rail */}
+        <aside className="hidden lg:flex lg:flex-col lg:sticky lg:top-24 bg-slate-900 text-white rounded-2xl p-4 min-h-[calc(100vh-7rem)] shadow-xl shadow-slate-900/10">
+          <div className="px-3 pt-2 pb-6">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-slate-400">Delegate workspace</p>
+            <p className="mt-2 text-lg font-semibold">Your command centre</p>
+          </div>
+          <nav className="space-y-1 text-sm" aria-label="Delegate navigation">
+            <Link href="/dashboard" className="flex items-center gap-3 rounded-xl bg-white/10 px-3 py-3 font-medium text-white">
+              <LayoutDashboard className="h-4 w-4 text-cyan-300" /> Overview
+            </Link>
+            <Link href="/training" className="flex items-center gap-3 rounded-xl px-3 py-3 text-slate-300 hover:bg-white/10 hover:text-white transition">
+              <BookOpen className="h-4 w-4" /> Training library
+            </Link>
+            <Link href="/committee" className="flex items-center gap-3 rounded-xl px-3 py-3 text-slate-300 hover:bg-white/10 hover:text-white transition">
+              <Video className="h-4 w-4" /> Live committees
+            </Link>
+          </nav>
+          <div className="mt-auto border-t border-white/10 pt-4">
+            <Link href="/auth" className="flex items-center gap-3 rounded-xl px-3 py-3 text-slate-300 hover:bg-white/10 hover:text-white transition">
+              <Settings className="h-4 w-4" /> Account settings
+            </Link>
+          </div>
+        </aside>
         
         {/* LEFT / CENTER (2 cols on PC): Icon Categories */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="space-y-6">
+          <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-cyan-50 via-white to-amber-50 border border-slate-200 p-6 sm:p-8 shadow-sm">
+            <div className="relative z-10 max-w-xl">
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-700">
+                <Sun className="h-4 w-4" /> DelegateX briefing
+              </div>
+              <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-slate-950">{greeting}, Vivaan.</h2>
+              <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600">Your next strong argument starts with one focused session. Pick up where you left off or step into the room.</p>
+            </div>
+            <div className="absolute -right-8 -top-12 h-40 w-40 rounded-full border-[18px] border-amber-200/60" />
+          </section>
           
           {/* SECTION 1: RECENTLY USED */}
           <section className="space-y-3">
