@@ -112,6 +112,24 @@ export default function AdminDashboard() {
     setTimeout(() => setCopiedCode(null), 2000);
   };
 
+  const handleAddStaff = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newStaffName.trim() || !newStaffEmail.trim()) return;
+    setStaffList([
+      ...staffList,
+      { id: Date.now().toString(), name: newStaffName.trim(), email: newStaffEmail.trim(), role: newStaffRole },
+    ]);
+    setNewStaffName("");
+    setNewStaffEmail("");
+  };
+
+  const handleAddCountry = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newCountry.trim()) return;
+    setCountries([...countries, newCountry.trim()]);
+    setNewCountry("");
+  };
+
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans">
       
@@ -332,6 +350,60 @@ export default function AdminDashboard() {
       {notice && (
         <div role="status" className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded-xl bg-slate-900 px-4 py-3 text-xs font-medium text-white shadow-xl">
           {notice}
+        </div>
+      )}
+      {activeModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4" role="dialog" aria-modal="true">
+          <div className="w-full max-w-lg rounded-2xl bg-white p-5 shadow-2xl">
+            <div className="mb-5 flex items-center justify-between">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Master Secretariat</p>
+                <h2 className="mt-1 text-xl font-bold text-slate-900">
+                  {activeModal === "MEETING" ? "Live Meetings" : activeModal === "STAFF" ? "Staff & Executive Board" : "Country Roster"}
+                </h2>
+              </div>
+              <button onClick={() => setActiveModal(null)} aria-label="Close panel" className="rounded-lg px-3 py-2 text-sm text-slate-500 hover:bg-slate-100">Close</button>
+            </div>
+
+            {activeModal === "MEETING" && (
+              <div className="space-y-4">
+                <form onSubmit={(e) => { handleCreateMeeting(e); setActiveModal(null); }} className="space-y-2">
+                  <input required value={newMeetingTitle} onChange={(e) => setNewMeetingTitle(e.target.value)} placeholder="Committee title" className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900" />
+                  <input value={newMeetingTopic} onChange={(e) => setNewMeetingTopic(e.target.value)} placeholder="Agenda or topic" className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900" />
+                  <button type="submit" className="w-full rounded-lg bg-slate-800 py-2.5 text-sm font-semibold text-white hover:bg-slate-700">Create meeting</button>
+                </form>
+                <div className="space-y-2 border-t border-slate-100 pt-4">
+                  {meetings.map((meeting) => (
+                    <div key={meeting.id} className="flex items-center justify-between rounded-lg bg-slate-50 p-3">
+                      <div><p className="text-sm font-semibold text-slate-900">{meeting.title}</p><p className="font-mono text-xs text-slate-500">{meeting.code}</p></div>
+                      <Link onClick={() => setActiveModal(null)} href={`/room/${meeting.code}`} className="rounded-md bg-slate-800 px-3 py-1.5 text-xs font-medium text-white">Open</Link>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeModal === "STAFF" && (
+              <div className="space-y-4">
+                <form onSubmit={handleAddStaff} className="grid gap-2 sm:grid-cols-2">
+                  <input required value={newStaffName} onChange={(e) => setNewStaffName(e.target.value)} placeholder="Full name" className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900" />
+                  <input required type="email" value={newStaffEmail} onChange={(e) => setNewStaffEmail(e.target.value)} placeholder="Email address" className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900" />
+                  <select value={newStaffRole} onChange={(e) => setNewStaffRole(e.target.value as "ADMIN" | "CHAIR")} className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900"><option value="CHAIR">Executive Board</option><option value="ADMIN">Administrator</option></select>
+                  <button type="submit" className="rounded-lg bg-slate-800 py-2 text-sm font-semibold text-white hover:bg-slate-700">Add account</button>
+                </form>
+                <div className="space-y-2 border-t border-slate-100 pt-4">
+                  {staffList.map((staff) => <div key={staff.id} className="flex items-center justify-between rounded-lg bg-slate-50 p-3"><div><p className="text-sm font-semibold text-slate-900">{staff.name}</p><p className="text-xs text-slate-500">{staff.email}</p></div><span className="text-xs font-bold text-cyan-700">{staff.role}</span></div>)}
+                </div>
+              </div>
+            )}
+
+            {activeModal === "ROSTER" && (
+              <div className="space-y-4">
+                <form onSubmit={handleAddCountry} className="flex gap-2"><input required value={newCountry} onChange={(e) => setNewCountry(e.target.value)} placeholder="Add country or delegation" className="min-w-0 flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900" /><button type="submit" className="rounded-lg bg-slate-800 px-4 py-2 text-sm font-semibold text-white">Add</button></form>
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">{countries.map((country) => <div key={country} className="rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-700">{country}</div>)}</div>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
