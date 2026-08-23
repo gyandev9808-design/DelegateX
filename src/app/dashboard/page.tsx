@@ -127,6 +127,27 @@ export default function DelegateDashboard() {
             </div>
             <div className="absolute -right-8 -top-12 h-40 w-40 rounded-full border-[18px] border-amber-200/60" />
           </section>
+
+          <section className="grid grid-cols-1 gap-3 sm:grid-cols-3" aria-label="Delegate summary">
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div className="flex items-center justify-between"><span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Next session</span><Calendar className="h-4 w-4 text-cyan-700" /></div>
+              <p className="mt-3 text-lg font-bold text-slate-900">UNSC Arctic</p>
+              <p className="mt-1 text-xs text-slate-500">Today, 4:30 PM</p>
+              <Link href="/committee" className="mt-3 inline-flex text-xs font-semibold text-cyan-700 hover:text-cyan-900">View committee <ArrowRight className="ml-1 h-3.5 w-3.5" /></Link>
+            </div>
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div className="flex items-center justify-between"><span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Training progress</span><Award className="h-4 w-4 text-amber-600" /></div>
+              <p className="mt-3 text-lg font-bold text-slate-900">68% complete</p>
+              <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-200"><div className="h-full w-[68%] rounded-full bg-amber-500" /></div>
+              <Link href="/training" className="mt-3 inline-flex text-xs font-semibold text-amber-700 hover:text-amber-900">Continue learning <ArrowRight className="ml-1 h-3.5 w-3.5" /></Link>
+            </div>
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div className="flex items-center justify-between"><span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Delegate standing</span><CheckCircle2 className="h-4 w-4 text-emerald-600" /></div>
+              <p className="mt-3 text-lg font-bold text-slate-900">Good momentum</p>
+              <p className="mt-1 text-xs text-slate-500">3 sessions attended this month</p>
+              <button onClick={() => showNotice("Your delegate report is being prepared.")} className="mt-3 text-xs font-semibold text-emerald-700 hover:text-emerald-900">View report <ArrowRight className="ml-1 inline h-3.5 w-3.5" /></button>
+            </div>
+          </section>
           
           {/* SECTION 1: RECENTLY USED */}
           <section className="space-y-3">
