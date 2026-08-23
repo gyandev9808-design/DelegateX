@@ -1,0 +1,47 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  MASTER_ADMIN   // Superuser: creates other admins & EBs
+  ADMIN          // Secretariat member
+  CHAIR          // Executive Board member
+  DELEGATE       // Standard participant
+}
+
+enum SessionType {
+  TRAINING
+  LIVE_COMMITTEE
+  CRISIS_SIMULATION
+}
+
+model User {
+  id            String          @id @default(cuid())
+  name          String
+  email         String          @unique
+  passwordHash  String
+  role          Role            @default(DELEGATE)
+  createdBy     String?         // ID of the admin who created this account
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  sessions      MeetingSession[] @relation("SessionHost")
+}
+
+model MeetingSession {
+  id            String          @id @default(cuid())
+  roomCode      String          @unique // e.g. "UNSC-2026-X1"
+  title         String          // e.g. "UNSC: Arctic Sovereignty" or "Rules of Procedure Workshop"
+  topic         String?
+  type          SessionType     @default(LIVE_COMMITTEE)
+  isLive        Boolean         @default(false)
+  passcode      String?
+  hostId        String
+  host          User            @relation("SessionHost", fields: [hostId], references: [id], onDelete: Cascade)
+  roster        String[]        // Country allocations or participant roster
+  createdAt     DateTime        @default(now())
+}
