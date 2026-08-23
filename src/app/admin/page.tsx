@@ -58,6 +58,7 @@ export default function AdminDashboard() {
   ]);
   const [newStaffName, setNewStaffName] = useState("");
   const [newStaffEmail, setNewStaffEmail] = useState("");
+  const [newStaffPassword, setNewStaffPassword] = useState("");
   const [newStaffRole, setNewStaffRole] = useState<"ADMIN" | "CHAIR">("CHAIR");
 
   const [meetings, setMeetings] = useState<MeetingRoom[]>([
@@ -116,13 +117,18 @@ export default function AdminDashboard() {
 
   const handleAddStaff = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newStaffName.trim() || !newStaffEmail.trim()) return;
+    if (!newStaffName.trim() || !newStaffEmail.trim() || newStaffPassword.length < 8) return;
     setStaffList([
       ...staffList,
       { id: Date.now().toString(), name: newStaffName.trim(), email: newStaffEmail.trim(), role: newStaffRole },
     ]);
     setNewStaffName("");
     setNewStaffEmail("");
+    setNewStaffPassword("");
+  };
+
+  const handleDeleteStaff = (id: string) => {
+    setStaffList(staffList.filter((staff) => staff.id !== id));
   };
 
   const handleAddCountry = (e: React.FormEvent) => {
@@ -390,11 +396,12 @@ export default function AdminDashboard() {
                 <form onSubmit={handleAddStaff} className="grid gap-2 sm:grid-cols-2">
                   <input required value={newStaffName} onChange={(e) => setNewStaffName(e.target.value)} placeholder="Full name" className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900" />
                   <input required type="email" value={newStaffEmail} onChange={(e) => setNewStaffEmail(e.target.value)} placeholder="Email address" className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900" />
+                  <input required minLength={8} type="password" value={newStaffPassword} onChange={(e) => setNewStaffPassword(e.target.value)} placeholder="Password (8+ characters)" className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900" />
                   <select value={newStaffRole} onChange={(e) => setNewStaffRole(e.target.value as "ADMIN" | "CHAIR")} className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900"><option value="CHAIR">Executive Board</option><option value="ADMIN">Administrator</option></select>
                   <button type="submit" className="rounded-lg bg-slate-800 py-2 text-sm font-semibold text-white hover:bg-slate-700">Add account</button>
                 </form>
                 <div className="space-y-2 border-t border-slate-100 pt-4">
-                  {staffList.map((staff) => <div key={staff.id} className="flex items-center justify-between rounded-lg bg-slate-50 p-3"><div><p className="text-sm font-semibold text-slate-900">{staff.name}</p><p className="text-xs text-slate-500">{staff.email}</p></div><span className="text-xs font-bold text-cyan-700">{staff.role}</span></div>)}
+                  {staffList.map((staff) => <div key={staff.id} className="flex items-center justify-between rounded-lg bg-slate-50 p-3"><div><p className="text-sm font-semibold text-slate-900">{staff.name}</p><p className="text-xs text-slate-500">{staff.email}</p></div><div className="flex items-center gap-3"><span className="text-xs font-bold text-cyan-700">{staff.role}</span><button type="button" onClick={() => handleDeleteStaff(staff.id)} className="rounded-md p-1.5 text-rose-600 hover:bg-rose-100" aria-label={`Delete ${staff.name}`} title="Delete account"><Trash2 className="h-4 w-4" /></button></div></div>)}
                 </div>
               </div>
             )}
