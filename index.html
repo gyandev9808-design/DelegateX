@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DelegateX | Study Smarter, Score Higher</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-highest": "#2d3449",
+                        "on-secondary": "#1000a9",
+                        "on-tertiary-fixed": "#002113",
+                        "surface-dim": "#0b1326",
+                        "on-secondary-fixed-variant": "#2f2ebe",
+                        "secondary-fixed-dim": "#c0c1ff",
+                        "secondary": "#c0c1ff",
+                        "secondary-container": "#3131c0",
+                        "surface-container-low": "#131b2e",
+                        "tertiary-container": "#1bbd85",
+                        "surface-container": "#171f33",
+                        "primary": "#4cd7f6",
+                        "on-surface": "#dae2fd",
+                        "inverse-surface": "#dae2fd",
+                        "surface-tint": "#4cd7f6",
+                        "surface": "#0b1326",
+                        "on-error-container": "#ffdad6",
+                        "outline-variant": "#3d494c",
+                        "text-muted": "#94A3B8",
+                        "primary-container": "#06b6d4",
+                        "tertiary": "#4edea3",
+                        "on-tertiary": "#003824",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-tertiary-container": "#00452e",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-secondary-fixed": "#07006c",
+                        "error-container": "#93000a",
+                        "glass-border": "rgba(255, 255, 255, 0.1)",
+                        "inverse-primary": "#00687a",
+                        "primary-fixed-dim": "#4cd7f6",
+                        "background": "#0b1326",
+                        "obsidian-deep": "#0B0F19",
+                        "glow-cyan": "rgba(6, 182, 212, 0.4)",
+                        "on-primary-fixed-variant": "#004e5c",
+                        "error": "#ffb4ab",
+                        "on-error": "#690005",
+                        "on-surface-variant": "#bcc9cd",
+                        "surface-variant": "#2d3449",
+                        "secondary-fixed": "#e1e0ff",
+                        "inverse-on-surface": "#283044",
+                        "outline": "#869397",
+                        "on-primary": "#003640",
+                        "charcoal-surface": "#1E293B",
+                        "surface-container-high": "#222a3d",
+                        "on-secondary-container": "#b0b2ff",
+                        "on-primary-fixed": "#001f26",
+                        "primary-fixed": "#acedff",
+                        "surface-bright": "#31394d",
+                        "on-background": "#dae2fd",
+                        "surface-container-lowest": "#060e20",
+                        "on-primary-container": "#00424f",
+                        "tertiary-fixed": "#6ffbbe"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                    spacing: {
+                        "container-max": "1200px",
+                        "unit": "8px",
+                        "section-padding": "120px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px"
+                    },
+                    fontFamily: {
+                        "display-lg-mobile": ["Geist", "sans-serif"],
+                        "display-lg": ["Geist", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "label-caps": ["Geist", "sans-serif"],
+                        "headline-lg": ["Geist", "sans-serif"],
+                        "headline-xl": ["Geist", "sans-serif"]
+                    },
+                    fontSize: {
+                        "display-lg-mobile": ["40px", { lineHeight: "1.2", fontWeight: "800" }],
+                        "display-lg": ["64px", { lineHeight: "1.1", letterSpacing: "-0.04em", fontWeight: "800" }],
+                        "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "label-caps": ["12px", { lineHeight: "1.0", letterSpacing: "0.15em", fontWeight: "700" }],
+                        "headline-lg": ["28px", { lineHeight: "1.3", fontWeight: "600" }],
+                        "headline-xl": ["36px", { lineHeight: "1.2", fontWeight: "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .perspective-grid {
+                background-image: 
+                    linear-gradient(to right, rgba(76, 215, 246, 0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(76, 215, 246, 0.05) 1px, transparent 1px);
+                background-size: 50px 50px;
+                transform: perspective(500px) rotateX(60deg);
+                transform-origin: top;
+            }
+            .glass-card {
+                @apply bg-charcoal-surface/40 backdrop-blur-xl border border-glass-border shadow-2xl;
+                background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(30, 41, 59, 0.1));
+                border-image: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(6,182,212,0.2)) 1;
+            }
+            .glass-card:hover {
+                @apply border-primary-container/50 shadow-glow-cyan/40 transition-all duration-300;
+            }
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-obsidian-deep text-on-surface font-body-md overflow-x-hidden antialiased selection:bg-primary-container selection:text-on-primary">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-8 py-3 w-[95%] max-w-[1200px] mx-auto rounded-full mt-4 bg-surface/40 backdrop-blur-xl border border-glass-border shadow-2xl shadow-glow-cyan/20">
+<div class="font-display-lg text-headline-xl font-bold text-primary flex items-center gap-2">
+<img alt="DelegateX Logo" class="w-10 h-10 object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VR4KkPdtXXOM3ZrzpM8Md0hyK0DYA2lz-hA1cpue6VJ_W493tkAOBZA3E5_1DBtjoFkgh7j0aTRfdBWIxgzIK08VzQB-iuE5bkpjt6mRRHQdjo69cc5Me20GXT-wm9c3w_V4VWgJbkfSnzfia_oDTtC8votYFeUDVbxbUF5bBlMrZYTIlXJD95LmDK_Y8btJ_GL1slQchUU2bbqSdi-2jQjAbq0XDT4XMt0aNTa_LYAOKZqlYIHaJ8CqA"/>
+            DelegateX
+        </div>
+<nav class="hidden md:flex gap-6">
+<a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Syllabus Notes</a>
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300" href="#">Smart Quizzes</a>
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300" href="#">Study Planner</a>
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300" href="#">Boards</a>
+</nav>
+<button class="bg-primary-container text-on-primary font-headline-lg text-body-md font-semibold px-6 py-2 rounded-full hover:shadow-[0_0_15px_rgba(6,182,212,0.6)] transition-all duration-300 hover:scale-105 active:scale-95">
+            Start Studying Free
+        </button>
+</header>
+<!-- Hero Section -->
+<section class="relative pt-40 pb-section-padding min-h-screen flex items-center overflow-hidden">
+<!-- Background Effects -->
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-obsidian-deep z-0"></div>
+<div class="absolute top-[20%] left-[10%] w-[40vw] h-[40vw] bg-primary-container/20 rounded-full blur-[120px] mix-blend-screen pointer-events-none"></div>
+<div class="absolute bottom-[10%] right-[10%] w-[30vw] h-[30vw] bg-secondary-container/20 rounded-full blur-[100px] mix-blend-screen pointer-events-none"></div>
+<div class="absolute inset-0 perspective-grid z-0 opacity-50"></div>
+</div>
+<div class="relative z-10 w-full max-w-container mx-auto px-gutter text-center flex flex-col items-center">
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mb-6 max-w-4xl tracking-tight">
+                Study Smarter, Score Higher with <span class="text-primary-container drop-shadow-[0_0_15px_rgba(6,182,212,0.8)]">Curriculum-Bound AI</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-2xl mx-auto">
+                Instant AI-generated notes, adaptive quizzes, and personalized schedules tailored strictly to your exact syllabus. No guesswork. Just better grades.
+            </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20">
+<button class="bg-secondary-container text-on-secondary-container font-headline-lg text-body-lg font-semibold px-8 py-4 rounded-full shadow-[0_0_20px_rgba(49,49,192,0.5)] hover:shadow-[0_0_30px_rgba(49,49,192,0.8)] transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                    Generate Chapter Notes
+                </button>
+<div class="glass-card rounded-full px-6 py-3 flex items-center gap-3">
+<span class="font-label-caps text-label-caps text-on-surface-variant">SELECT BOARD:</span>
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold border border-primary/20">CBSE</span>
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold border border-primary/20">ICSE</span>
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold border border-primary/20">NCERT</span>
+</div>
+</div>
+<!-- Dashboard Product Showcase -->
+<div class="relative w-full max-w-5xl mx-auto h-[400px] md:h-[500px] perspective-[1200px]">
+<div class="absolute inset-0 flex justify-center items-center transform rotate-x-[15deg] scale-105 translate-y-10 group transition-transform duration-700 hover:rotate-x-0 hover:scale-100 hover:translate-y-0">
+<!-- Left Card -->
+<div class="absolute left-[5%] z-20 w-[300px] glass-card rounded-xl p-6 -rotate-6 transform hover:rotate-0 hover:z-40 transition-all duration-500 hover:-translate-y-4">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-8 rounded bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-sm">description</span>
+</div>
+<h3 class="font-headline-lg text-body-md font-bold text-on-surface">Class 10 Physics</h3>
+</div>
+<p class="font-body-md text-sm text-on-surface-variant mb-4">Light &amp; Reflection: Concise summary and key formulas tailored for CBSE board.</p>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="w-3/4 h-full bg-primary-container"></div>
+</div>
+</div>
+<!-- Center Card (Main) -->
+<div class="relative z-30 w-[400px] glass-card rounded-xl p-8 shadow-[0_0_50px_rgba(6,182,212,0.2)] transform hover:z-40 transition-all duration-500 hover:-translate-y-6 bg-surface-container/80">
+<div class="absolute -top-4 right-4 bg-tertiary-container text-on-tertiary-container font-label-caps text-label-caps px-3 py-1 rounded-full shadow-lg">
+                            ACTIVE
+                        </div>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-full bg-secondary-container/30 border border-secondary flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-xl">psychology</span>
+</div>
+<div>
+<h2 class="font-headline-lg text-body-lg font-bold text-on-surface">Adaptive MCQ Quiz</h2>
+<p class="text-xs text-on-surface-variant">Chapter Mastery: 88%</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="p-3 rounded bg-surface-container border border-outline-variant/30 text-sm flex items-center justify-between hover:border-primary/50 transition-colors cursor-pointer">
+<span>A. Real and inverted</span>
+<span class="material-symbols-outlined text-text-muted text-sm">circle</span>
+</div>
+<div class="p-3 rounded bg-primary-container/20 border border-primary text-sm flex items-center justify-between">
+<span class="text-primary font-medium">B. Virtual and erect</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="p-3 rounded bg-surface-container border border-outline-variant/30 text-sm flex items-center justify-between hover:border-primary/50 transition-colors cursor-pointer">
+<span>C. Real and erect</span>
+<span class="material-symbols-outlined text-text-muted text-sm">circle</span>
+</div>
+</div>
+</div>
+<!-- Right Card -->
+<div class="absolute right-[5%] z-20 w-[300px] glass-card rounded-xl p-6 rotate-6 transform hover:rotate-0 hover:z-40 transition-all duration-500 hover:-translate-y-4">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-8 rounded bg-tertiary-container/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+</div>
+<h3 class="font-headline-lg text-body-md font-bold text-on-surface">Weekly AI Planner</h3>
+</div>
+<div class="grid grid-cols-7 gap-1 mb-4">
+<div class="text-center text-[10px] text-text-muted">M</div>
+<div class="text-center text-[10px] text-text-muted">T</div>
+<div class="text-center text-[10px] text-text-muted">W</div>
+<div class="text-center text-[10px] text-text-muted">T</div>
+<div class="text-center text-[10px] text-text-muted">F</div>
+<div class="text-center text-[10px] text-text-muted">S</div>
+<div class="text-center text-[10px] text-text-muted">S</div>
+<div class="w-6 h-6 rounded-full bg-primary-container/30 border border-primary/50 mx-auto"></div>
+<div class="w-6 h-6 rounded-full bg-surface-container-high mx-auto"></div>
+<div class="w-6 h-6 rounded-full bg-tertiary-container/30 border border-tertiary/50 mx-auto relative"><div class="absolute inset-1 bg-tertiary rounded-full blur-[2px]"></div></div>
+<div class="w-6 h-6 rounded-full bg-surface-container-high mx-auto"></div>
+<div class="w-6 h-6 rounded-full bg-surface-container-high mx-auto"></div>
+<div class="w-6 h-6 rounded-full bg-secondary-container/30 border border-secondary/50 mx-auto"></div>
+<div class="w-6 h-6 rounded-full bg-surface-container-high mx-auto"></div>
+</div>
+<button class="w-full py-2 rounded bg-surface-container-high text-xs hover:bg-surface-bright transition-colors border border-outline-variant/30">View Schedule</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="relative py-section-padding z-10">
+<div class="max-w-container mx-auto px-gutter">
+<div class="text-center mb-16">
+<h2 class="font-headline-xl text-headline-xl text-on-surface mb-4">Every Tool You Need to Ace Your Exams</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Powerful AI features designed to streamline your study process and boost retention.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="glass-card rounded-xl p-8 hover:-translate-y-2 transition-transform duration-300">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 text-primary flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-2xl">menu_book</span>
+</div>
+<h3 class="font-headline-lg text-xl font-bold text-on-surface mb-3">AI-Powered Notes</h3>
+<p class="text-on-surface-variant text-body-md">Comprehensive study notes generated from your syllabus.</p>
+</div>
+<div class="glass-card rounded-xl p-8 hover:-translate-y-2 transition-transform duration-300">
+<div class="w-12 h-12 rounded-full bg-secondary-container/20 text-secondary flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-2xl">quiz</span>
+</div>
+<h3 class="font-headline-lg text-xl font-bold text-on-surface mb-3">Smart Quizzes</h3>
+<p class="text-on-surface-variant text-body-md">Test yourself with auto-generated quizzes that adapt to your chapters.</p>
+</div>
+<div class="glass-card rounded-xl p-8 hover:-translate-y-2 transition-transform duration-300">
+<div class="w-12 h-12 rounded-full bg-tertiary-container/20 text-tertiary flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-2xl">event_note</span>
+</div>
+<h3 class="font-headline-lg text-xl font-bold text-on-surface mb-3">Personalized Study Plan</h3>
+<p class="text-on-surface-variant text-body-md">Get a custom weekly schedule based on your subjects, goals, and available time.</p>
+</div>
+<div class="glass-card rounded-xl p-8 hover:-translate-y-2 transition-transform duration-300">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 text-primary flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-2xl">verified_user</span>
+</div>
+<h3 class="font-headline-lg text-xl font-bold text-on-surface mb-3">Curriculum-Bound AI</h3>
+<p class="text-on-surface-variant text-body-md">Our AI only uses your approved textbook content. Every fact is traceable.</p>
+</div>
+<div class="glass-card rounded-xl p-8 hover:-translate-y-2 transition-transform duration-300">
+<div class="w-12 h-12 rounded-full bg-secondary-container/20 text-secondary flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-2xl">school</span>
+</div>
+<h3 class="font-headline-lg text-xl font-bold text-on-surface mb-3">Works for All Boards</h3>
+<p class="text-on-surface-variant text-body-md">CBSE, ICSE, or State Board support.</p>
+</div>
+<div class="glass-card rounded-xl p-8 hover:-translate-y-2 transition-transform duration-300">
+<div class="w-12 h-12 rounded-full bg-tertiary-container/20 text-tertiary flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-2xl">model_training</span>
+</div>
+<h3 class="font-headline-lg text-xl font-bold text-on-surface mb-3">Exam-Ready Content</h3>
+<p class="text-on-surface-variant text-body-md">Designed for active recall and long-term retention.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works Section -->
+<section class="relative py-section-padding bg-surface/50 z-10 border-y border-glass-border">
+<div class="max-w-container mx-auto px-gutter">
+<div class="text-center mb-16">
+<h2 class="font-headline-xl text-headline-xl text-on-surface mb-4">Start in Under 2 Minutes</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Three simple steps to supercharge your study sessions.</p>
+</div>
+<div class="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-4 relative">
+<div class="hidden md:block absolute top-1/2 left-[15%] right-[15%] h-0.5 bg-gradient-to-r from-primary-container/20 via-secondary-container/50 to-tertiary-container/20 -translate-y-1/2 z-0"></div>
+<div class="glass-card rounded-2xl p-8 text-center w-full md:w-1/3 relative z-10">
+<div class="w-16 h-16 rounded-full bg-surface border-2 border-primary-container text-primary-container font-headline-xl text-2xl font-bold flex items-center justify-center mx-auto mb-6 shadow-[0_0_15px_rgba(6,182,212,0.3)]">01</div>
+<h3 class="font-headline-lg text-xl font-bold text-on-surface mb-2">Choose Your Chapter</h3>
+<p class="text-on-surface-variant text-sm">Select your board, subject, and the specific chapter you want to master.</p>
+</div>
+<div class="glass-card rounded-2xl p-8 text-center w-full md:w-1/3 relative z-10 border-secondary-container/50">
+<div class="w-16 h-16 rounded-full bg-surface border-2 border-secondary-container text-secondary-container font-headline-xl text-2xl font-bold flex items-center justify-center mx-auto mb-6 shadow-[0_0_15px_rgba(49,49,192,0.3)]">02</div>
+<h3 class="font-headline-lg text-xl font-bold text-on-surface mb-2">Generate Instantly</h3>
+<p class="text-on-surface-variant text-sm">Our AI creates comprehensive notes, quizzes, and a personalized study plan.</p>
+</div>
+<div class="glass-card rounded-2xl p-8 text-center w-full md:w-1/3 relative z-10">
+<div class="w-16 h-16 rounded-full bg-surface border-2 border-tertiary-container text-tertiary-container font-headline-xl text-2xl font-bold flex items-center justify-center mx-auto mb-6 shadow-[0_0_15px_rgba(27,189,133,0.3)]">03</div>
+<h3 class="font-headline-lg text-xl font-bold text-on-surface mb-2">Study Online</h3>
+<p class="text-on-surface-variant text-sm">Access your materials anywhere, track progress, and ace your exams.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing Section -->
+<section class="relative py-section-padding z-10">
+<div class="max-w-container mx-auto px-gutter">
+<div class="text-center mb-16">
+<h2 class="font-headline-xl text-headline-xl text-on-surface mb-4">Choose Your Study Plan</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Affordable plans designed for students.</p>
+</div>
+<div class="flex flex-col md:flex-row justify-center items-center gap-8 max-w-4xl mx-auto">
+<!-- Growth Plan -->
+<div class="glass-card rounded-2xl p-8 w-full md:w-1/2">
+<h3 class="font-headline-lg text-2xl font-bold text-on-surface mb-2">Growth Plan</h3>
+<div class="flex items-end gap-1 mb-6">
+<span class="font-display-lg text-4xl font-bold text-primary">₹100</span>
+<span class="text-on-surface-variant mb-1">/month</span>
+</div>
+<ul class="space-y-4 mb-8">
+<li class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        AI-generated Notes
+                    </li>
+<li class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Adaptive Quizzes
+                    </li>
+<li class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Planner Access
+                    </li>
+</ul>
+<button class="w-full py-3 rounded-full bg-surface-container-high text-on-surface font-semibold hover:bg-surface-bright transition-colors border border-outline-variant/30">Get Started</button>
+</div>
+<!-- Excellence Plan -->
+<div class="glass-card rounded-2xl p-8 w-full md:w-1/2 border-primary-container/50 shadow-[0_0_30px_rgba(6,182,212,0.2)] relative transform md:scale-105">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary font-label-caps text-[10px] px-4 py-1 rounded-full shadow-lg font-bold tracking-wider">
+                    MOST POPULAR
+                </div>
+<h3 class="font-headline-lg text-2xl font-bold text-on-surface mb-2">Excellence Plan</h3>
+<div class="flex items-end gap-1 mb-6">
+<span class="font-display-lg text-4xl font-bold text-secondary-container">₹160</span>
+<span class="text-on-surface-variant mb-1">/month</span>
+</div>
+<ul class="space-y-4 mb-8">
+<li class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Higher quality notes
+                    </li>
+<li class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Smart Flashcards
+                    </li>
+<li class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        AI Doubt Clarifier
+                    </li>
+<li class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Priority support
+                    </li>
+</ul>
+<button class="w-full py-3 rounded-full bg-secondary-container text-on-secondary-container font-semibold hover:shadow-[0_0_20px_rgba(49,49,192,0.6)] transition-all duration-300">Choose Excellence</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonial Section -->
+<section class="relative py-section-padding bg-surface/30 z-10 border-t border-glass-border">
+<div class="max-w-container mx-auto px-gutter flex justify-center">
+<div class="glass-card rounded-2xl p-8 md:p-12 max-w-3xl text-center relative">
+<span class="material-symbols-outlined absolute top-6 left-6 text-6xl text-primary/10" style="font-variation-settings: 'FILL' 1;">format_quote</span>
+<p class="font-headline-lg text-xl md:text-2xl text-on-surface italic mb-8 relative z-10">
+                "I used to spend hours making notes. DelegateX generates better ones in seconds. My grades went from B to A+ in one semester."
+            </p>
+<div class="flex items-center justify-center gap-4">
+<div class="w-12 h-12 rounded-full bg-tertiary-container/30 flex items-center justify-center text-tertiary font-bold text-xl border border-tertiary/50">
+                    P
+                </div>
+<div class="text-left">
+<div class="font-bold text-on-surface">Priya S.</div>
+<div class="text-sm text-on-surface-variant">Class 9 CBSE Student</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA Section -->
+<section class="relative py-24 z-10 border-t border-glass-border overflow-hidden">
+<div class="absolute inset-0 bg-primary-container/5 mix-blend-screen z-0"></div>
+<div class="max-w-container mx-auto px-gutter text-center relative z-10">
+<h2 class="font-display-lg text-4xl md:text-5xl text-on-surface mb-6">Ready to Boost Your Grades?</h2>
+<p class="font-body-lg text-lg text-on-surface-variant mb-10 max-w-2xl mx-auto">Join thousands of students studying smarter with DelegateX.</p>
+<button class="bg-primary-container text-on-primary font-headline-lg text-xl font-bold px-10 py-5 rounded-full shadow-[0_0_25px_rgba(6,182,212,0.6)] hover:shadow-[0_0_40px_rgba(6,182,212,0.9)] transition-all duration-300 transform hover:scale-105">
+            Get Started Free
+        </button>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest text-primary font-body-md w-full pt-20 pb-10 border-t border-glass-border">
+<div class="max-w-container mx-auto px-margin-mobile md:px-gutter">
+<div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 mb-12">
+<div class="font-display-lg text-headline-lg font-bold text-primary flex items-center gap-2">
+<img alt="DelegateX Logo" class="w-8 h-8 object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VR4KkPdtXXOM3ZrzpM8Md0hyK0DYA2lz-hA1cpue6VJ_W493tkAOBZA3E5_1DBtjoFkgh7j0aTRfdBWIxgzIK08VzQB-iuE5bkpjt6mRRHQdjo69cc5Me20GXT-wm9c3w_V4VWgJbkfSnzfia_oDTtC8votYFeUDVbxbUF5bBlMrZYTIlXJD95LmDK_Y8btJ_GL1slQchUU2bbqSdi-2jQjAbq0XDT4XMt0aNTa_LYAOKZqlYIHaJ8CqA"/>
+                    DelegateX
+                </div>
+<div class="flex flex-wrap justify-center md:justify-end gap-6">
+<a class="text-text-muted hover:text-tertiary transition-colors duration-200" href="#">NCERT Solutions</a>
+<a class="text-text-muted hover:text-tertiary transition-colors duration-200" href="#">CBSE Notes</a>
+<a class="text-text-muted hover:text-tertiary transition-colors duration-200" href="#">ICSE Prep</a>
+<a class="text-text-muted hover:text-tertiary transition-colors duration-200" href="#">Study Planner</a>
+<a class="text-text-muted hover:text-tertiary transition-colors duration-200" href="#">Privacy Policy</a>
+<a class="text-text-muted hover:text-tertiary transition-colors duration-200" href="#">Contact Support</a>
+</div>
+</div>
+<div class="text-center text-sm text-text-muted">
+                © 2026 DelegateX. Curriculum-bound excellence.
+            </div>
+</div>
+</footer>
+</body></html>
