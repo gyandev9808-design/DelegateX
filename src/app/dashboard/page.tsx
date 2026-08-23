@@ -1,350 +1,69 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import {
-  BookOpen,
-  FileText,
-  Video,
-  Award,
-  Calendar,
-  Clock,
-  Mail,
-  Newspaper,
-  Image as ImageIcon,
-  CheckCircle2,
-  Mic,
-  MessageSquare,
-  KeyRound,
-  ArrowRight,
-  Search,
-  Bell,
-  LogOut,
-  Hand,
-  FolderOpen,
-  Library,
-  FileCheck,
-  LayoutDashboard,
-  UserRound,
-  Settings,
-  Sun,
-} from "lucide-react";
+import { Award, BookOpen, CalendarDays, Check, CheckCircle2, ChevronRight, FileText, FolderOpen, GraduationCap, LayoutDashboard, Library, LogOut, Menu, MessageSquare, Mic2, Moon, Play, Search, Sparkles, Trophy, Video, X } from "lucide-react";
+
+const subjects = [
+  ["Mathematics", "Algebra & Geometry", "100%", "bg-cyan-300", "text-cyan-300"],
+  ["Science", "Physics & Chemistry", "60%", "bg-emerald-300", "text-emerald-300"],
+  ["History", "Modern India", "20%", "bg-violet-300", "text-violet-300"],
+  ["Geography", "Resources & Development", "70%", "bg-cyan-400", "text-cyan-400"],
+];
+
+const menuItems = [[LayoutDashboard, "Dashboard", "/dashboard"], [Sparkles, "Generate Notes", "/dashboard/notes"], [Trophy, "Take Quiz", "/dashboard/quiz"], [CalendarDays, "Study Plan", "/dashboard/calendar"], [FileText, "Worksheets", "/dashboard/worksheets"], [Library, "Flashcards", "/dashboard/flashcards"]];
 
 export default function DelegateDashboard() {
   const router = useRouter();
   const [roomCode, setRoomCode] = useState("");
-  const [placardRaised, setPlacardRaised] = useState(false);
-  const [greeting, setGreeting] = useState("Good day");
-  const [notice, setNotice] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [focusItems, setFocusItems] = useState([false, false, false]);
 
-  const showNotice = (message: string) => {
-    setNotice(message);
-    window.setTimeout(() => setNotice(""), 2500);
+  const joinSession = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (roomCode.trim()) router.push(`/room/${roomCode.trim().toUpperCase()}`);
   };
 
-  useEffect(() => {
-    const updateGreeting = () => {
-      const hour = new Date().getHours();
-      setGreeting(hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening");
-    };
-
-    updateGreeting();
-    const timer = window.setInterval(updateGreeting, 60_000);
-    return () => window.clearInterval(timer);
-  }, []);
-
-  const handleJoinSession = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!roomCode.trim()) return;
-    router.push(`/room/${roomCode.trim().toUpperCase()}`);
-  };
+  const toggleFocus = (index: number) => setFocusItems((items) => items.map((done, itemIndex) => itemIndex === index ? !done : done));
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans">
-      
-      {/* Top Header Bar (Matching App Screenshot) */}
-      <header className="bg-slate-700 text-white px-5 py-4 flex items-center justify-between sticky top-0 z-40 shadow-sm">
-        <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 rounded-full bg-slate-900 border-2 border-slate-600 flex items-center justify-center font-bold text-white text-base">
-            VC
-          </div>
-          <div>
-            <h1 className="text-base font-semibold leading-tight">Vivaan Chawla</h1>
-            <p className="text-xs text-slate-300">VIII- G • 4606</p>
-          </div>
-        </div>
-
-        <div className="flex items-center space-x-3 text-slate-200">
-          <button onClick={() => router.push("/dashboard/search")} aria-label="Search" className="p-2 hover:bg-slate-600 rounded-full transition">
-            <Search className="w-5 h-5" />
-          </button>
-          <button onClick={() => router.push("/dashboard/notifications")} aria-label="Notifications" className="p-2 hover:bg-slate-600 rounded-full transition relative">
-            <Bell className="w-5 h-5" />
-            <span className="w-2 h-2 bg-indigo-400 rounded-full absolute top-1.5 right-1.5" />
-          </button>
-          <Link href="/auth" className="p-2 hover:bg-slate-600 rounded-full transition text-rose-300">
-            <LogOut className="w-5 h-5" />
-          </Link>
-        </div>
+    <div className="min-h-screen bg-[#0f131c] text-[#dfe2ef] selection:bg-cyan-300 selection:text-slate-950">
+      <header className="fixed left-0 right-0 top-0 z-50 flex h-16 items-center justify-between border-b border-white/10 bg-[#0f131c]/90 px-5 backdrop-blur-xl md:hidden">
+        <Link href="/dashboard" className="flex items-center gap-2 text-xl font-extrabold text-cyan-300"><GraduationCap className="h-6 w-6" />Delegate<span className="text-emerald-300">X</span></Link>
+        <button onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation" className="text-slate-300">{menuOpen ? <X /> : <Menu />}</button>
       </header>
+      <aside className={`${menuOpen ? "flex" : "hidden"} fixed inset-0 z-40 w-64 flex-col border-r border-white/10 bg-[#181b25] p-4 pt-24 md:flex`}>
+        <Link href="/dashboard" className="mb-8 flex items-center gap-3 px-2"><div className="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-300/10 text-cyan-300 shadow-lg shadow-cyan-500/20"><GraduationCap className="h-6 w-6" /></div><div><p className="text-2xl font-extrabold text-cyan-300">DelegateX</p><p className="text-xs text-slate-500">Delegate workspace</p></div></Link>
+        <p className="mb-2 px-4 text-[11px] font-semibold uppercase tracking-widest text-slate-500">Menu</p>
+        <nav className="space-y-1">{menuItems.map(([Icon, label, href], index) => { const NavIcon = Icon as typeof LayoutDashboard; return <Link key={label as string} href={href as string} onClick={() => setMenuOpen(false)} className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition ${index === 0 ? "border border-cyan-300/30 bg-cyan-300/10 text-cyan-300 shadow-lg shadow-cyan-950/20" : "text-slate-400 hover:bg-white/5 hover:text-white"}`}><NavIcon className="h-4 w-4" />{label as string}</Link>; })}</nav>
+        <p className="mb-2 mt-9 px-4 text-[11px] font-semibold uppercase tracking-widest text-slate-500">Library</p>
+        <nav className="space-y-1"><Link href="/dashboard/mailbox" className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-400 transition hover:bg-white/5 hover:text-white"><FolderOpen className="h-4 w-4" />My Notes</Link><Link href="/dashboard/performance" className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-400 transition hover:bg-white/5 hover:text-white"><Award className="h-4 w-4" />Achievements</Link><Link href="/dashboard/messages" className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-400 transition hover:bg-white/5 hover:text-white"><MessageSquare className="h-4 w-4" />Doubt Clarifier</Link></nav>
+        <div className="mt-auto border-t border-white/10 pt-4"><div className="flex items-center gap-3 px-3 py-2"><div className="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-300/10 font-bold text-cyan-300">TS</div><div className="min-w-0"><p className="truncate text-sm font-semibold text-white">test student</p><p className="truncate text-xs text-slate-500">Grade 8 · Delegate</p></div></div><div className="mt-2 flex justify-between px-3 text-slate-500"><button aria-label="Dark mode" className="rounded-lg p-2 hover:bg-white/5 hover:text-cyan-300"><Moon className="h-4 w-4" /></button><Link href="/auth" aria-label="Sign out" className="rounded-lg p-2 hover:bg-white/5 hover:text-rose-300"><LogOut className="h-4 w-4" /></Link></div></div>
+      </aside>
 
-      {/* Main Container */}
-      <main className="flex-1 max-w-[1440px] w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)_300px] gap-6 items-start">
-        {/* Desktop navigation rail */}
-        <aside className="hidden lg:flex lg:flex-col lg:sticky lg:top-24 bg-slate-900 text-white rounded-2xl p-4 min-h-[calc(100vh-7rem)] shadow-xl shadow-slate-900/10">
-          <div className="px-3 pt-2 pb-6">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-slate-400">Delegate workspace</p>
-            <p className="mt-2 text-lg font-semibold">Your command centre</p>
-          </div>
-          <nav className="space-y-1 text-sm" aria-label="Delegate navigation">
-            <Link href="/dashboard" className="flex items-center gap-3 rounded-xl bg-white/10 px-3 py-3 font-medium text-white">
-              <LayoutDashboard className="h-4 w-4 text-cyan-300" /> Overview
-            </Link>
-            <Link href="/training" className="flex items-center gap-3 rounded-xl px-3 py-3 text-slate-300 hover:bg-white/10 hover:text-white transition">
-              <BookOpen className="h-4 w-4" /> Training library
-            </Link>
-            <Link href="/committee" className="flex items-center gap-3 rounded-xl px-3 py-3 text-slate-300 hover:bg-white/10 hover:text-white transition">
-              <Video className="h-4 w-4" /> Live committees
-            </Link>
-          </nav>
-          <div className="mt-auto border-t border-white/10 pt-4">
-            <Link href="/auth" className="flex items-center gap-3 rounded-xl px-3 py-3 text-slate-300 hover:bg-white/10 hover:text-white transition">
-              <Settings className="h-4 w-4" /> Account settings
-            </Link>
-          </div>
-        </aside>
-        
-        {/* LEFT / CENTER (2 cols on PC): Icon Categories */}
-        <div className="space-y-6">
-          <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-cyan-50 via-white to-amber-50 border border-slate-200 p-6 sm:p-8 shadow-sm">
-            <div className="relative z-10 max-w-xl">
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-700">
-                <Sun className="h-4 w-4" /> DelegateX briefing
-              </div>
-              <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-slate-950">{greeting}, Vivaan.</h2>
-              <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600">Your next strong argument starts with one focused session. Pick up where you left off or step into the room.</p>
-            </div>
-            <div className="absolute -right-8 -top-12 h-40 w-40 rounded-full border-[18px] border-amber-200/60" />
-          </section>
-
-          <section className="grid grid-cols-1 gap-3 sm:grid-cols-3" aria-label="Delegate summary">
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-              <div className="flex items-center justify-between"><span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Next session</span><Calendar className="h-4 w-4 text-cyan-700" /></div>
-              <p className="mt-3 text-lg font-bold text-slate-900">UNSC Arctic</p>
-              <p className="mt-1 text-xs text-slate-500">Today, 4:30 PM</p>
-              <Link href="/committee" className="mt-3 inline-flex text-xs font-semibold text-cyan-700 hover:text-cyan-900">View committee <ArrowRight className="ml-1 h-3.5 w-3.5" /></Link>
-            </div>
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-              <div className="flex items-center justify-between"><span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Training progress</span><Award className="h-4 w-4 text-amber-600" /></div>
-              <p className="mt-3 text-lg font-bold text-slate-900">68% complete</p>
-              <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-200"><div className="h-full w-[68%] rounded-full bg-amber-500" /></div>
-              <Link href="/training" className="mt-3 inline-flex text-xs font-semibold text-amber-700 hover:text-amber-900">Continue learning <ArrowRight className="ml-1 h-3.5 w-3.5" /></Link>
-            </div>
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-              <div className="flex items-center justify-between"><span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Delegate standing</span><CheckCircle2 className="h-4 w-4 text-emerald-600" /></div>
-              <p className="mt-3 text-lg font-bold text-slate-900">Good momentum</p>
-              <p className="mt-1 text-xs text-slate-500">3 sessions attended this month</p>
-              <button onClick={() => router.push("/dashboard/report")} className="mt-3 text-xs font-semibold text-emerald-700 hover:text-emerald-900">View report <ArrowRight className="ml-1 inline h-3.5 w-3.5" /></button>
-            </div>
-          </section>
-          
-          {/* SECTION 1: RECENTLY USED */}
-          <section className="space-y-3">
-            <h2 className="text-xs uppercase font-bold tracking-wider text-slate-800">
-              Recently Used
-            </h2>
-            <div className="grid grid-cols-4 gap-4 text-center">
-              <Link href="/training" className="flex flex-col items-center group">
-                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
-                  <FileText className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-slate-700 mt-2">Syllabus</span>
-              </Link>
-
-              <button onClick={() => router.push("/dashboard/messages")} className="flex flex-col items-center group cursor-pointer">
-                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
-                  <MessageSquare className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-slate-700 mt-2">SMS History</span>
-              </button>
-
-              <Link href="/training" className="flex flex-col items-center group">
-                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
-                  <BookOpen className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-slate-700 mt-2">Homework</span>
-              </Link>
-
-              <button onClick={() => router.push("/dashboard/circulars")} className="flex flex-col items-center group cursor-pointer">
-                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
-                  <FileCheck className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-slate-700 mt-2">Circulars</span>
-              </button>
-            </div>
-          </section>
-
-          <hr className="border-slate-100" />
-
-          {/* SECTION 2: ACADEMICS & TRAINING */}
-          <section className="space-y-3">
-            <h2 className="text-xs uppercase font-bold tracking-wider text-slate-800">
-              Academics
-            </h2>
-            <div className="grid grid-cols-4 gap-y-5 gap-x-3 text-center">
-              <Link href="/training" className="flex flex-col items-center group">
-                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
-                  <Award className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-slate-700 mt-2">Achievements</span>
-              </Link>
-
-              <button onClick={() => router.push("/dashboard/attendance")} className="flex flex-col items-center group cursor-pointer">
-                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
-                  <Calendar className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-slate-700 mt-2">Attendance</span>
-              </button>
-
-              <Link href="/training" className="flex flex-col items-center group">
-                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
-                  <BookOpen className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-slate-700 mt-2">Homework</span>
-              </Link>
-
-              <button onClick={() => router.push("/dashboard/hostel-attendance")} className="flex flex-col items-center group cursor-pointer">
-                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
-                  <Clock className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-slate-700 mt-2">Hostel Attendance</span>
-              </button>
-
-              <button onClick={() => router.push("/dashboard/performance")} className="flex flex-col items-center group cursor-pointer">
-                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
-                  <Mic className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-slate-700 mt-2">Performance</span>
-              </button>
-
-              <button onClick={() => router.push("/dashboard/remarks")} className="flex flex-col items-center group cursor-pointer">
-                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
-                  <CheckCircle2 className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-slate-700 mt-2">Remarks</span>
-              </button>
-
-              <button onClick={() => router.push("/dashboard/results")} className="flex flex-col items-center group cursor-pointer">
-                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
-                  <FolderOpen className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-slate-700 mt-2">Results</span>
-              </button>
-
-              <Link href="/training" className="flex flex-col items-center group">
-                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
-                  <FileText className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-slate-700 mt-2">Syllabus</span>
-              </Link>
-            </div>
-          </section>
-
-          <hr className="border-slate-100" />
-
-          {/* SECTION 3: COMMUNICATION */}
-          <section className="space-y-3">
-            <h2 className="text-xs uppercase font-bold tracking-wider text-slate-800">
-              Communication
-            </h2>
-            <div className="grid grid-cols-4 gap-y-5 gap-x-3 text-center">
-              <button onClick={() => router.push("/dashboard/mailbox")} className="flex flex-col items-center group cursor-pointer">
-                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
-                  <Mail className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-slate-700 mt-2">Mail Box</span>
-              </button>
-
-              <button onClick={() => router.push("/dashboard/calendar")} className="flex flex-col items-center group cursor-pointer">
-                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
-                  <Calendar className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-slate-700 mt-2">Calendar</span>
-              </button>
-
-              <button onClick={() => router.push("/dashboard/news")} className="flex flex-col items-center group cursor-pointer">
-                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
-                  <Newspaper className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-slate-700 mt-2">School News</span>
-              </button>
-
-              <button onClick={() => router.push("/dashboard/gallery")} className="flex flex-col items-center group cursor-pointer">
-                <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
-                  <ImageIcon className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-medium text-slate-700 mt-2">Image Gallery</span>
-              </button>
-            </div>
-          </section>
-        </div>
-
-        {/* RIGHT COLUMN (PC): Quick Actions & Room Entry */}
-        <aside className="space-y-4 lg:sticky lg:top-20">
-          
-          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3">
-            <h2 className="text-sm font-bold text-slate-900 flex items-center space-x-2">
-              <KeyRound className="w-4 h-4 text-slate-700" />
-              <span>Join Live Committee</span>
-            </h2>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Paste the room invite code provided by your Chair.
-            </p>
-
-            <form onSubmit={handleJoinSession} className="space-y-2">
-              <input
-                type="text"
-                value={roomCode}
-                onChange={(e) => setRoomCode(e.target.value)}
-                placeholder="Code (e.g. UNSC-2026)"
-                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-700 font-mono uppercase"
-              />
-              <button
-                type="submit"
-                className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-xl text-xs transition flex items-center justify-center space-x-1.5 shadow-sm"
-              >
-                <span>Enter Live Room</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </form>
-          </div>
-
-          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3">
-            <span className="text-[11px] uppercase font-bold tracking-wider text-slate-500 block">
-              Floor Control
-            </span>
-
-            <button
-              onClick={() => setPlacardRaised(!placardRaised)}
-              className={`w-full flex items-center justify-center space-x-2 py-3 rounded-xl text-xs font-semibold transition ${
-                placardRaised
-                  ? "bg-amber-500 text-slate-950 hover:bg-amber-400 shadow-sm"
-                  : "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200"
-              }`}
-            >
-              <Hand className="w-4 h-4" />
-              <span>{placardRaised ? "Placard Raised (Active)" : "Raise Placard"}</span>
-            </button>
-          </div>
-        </aside>
-
-      </main>
-      {notice && (
-        <div role="status" className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded-xl bg-slate-900 px-4 py-3 text-xs font-medium text-white shadow-xl">
-          {notice}
-        </div>
-      )}
-    </div>
-  );
-}
+      <main className="min-h-screen overflow-x-hidden bg-[radial-gradient(ellipse_at_top_right,rgba(49,49,192,.18),transparent_35%),radial-gradient(ellipse_at_bottom_left,rgba(6,182,212,.08),transparent_32%)] px-4 pb-12 pt-24 sm:px-6 md:ml-64 md:px-12 md:pt-10">
+        <div className="mx-auto max-w-7xl space-y-8">
+          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center"><div><p className="mb-2 text-xs font-bold uppercase tracking-[.2em] text-cyan-300">Your command center</p><h1 className="text-3xl font-bold text-white sm:text-4xl">Welcome back, <span className="text-cyan-300">test student</span></h1><p className="mt-2 text-slate-400">Ready to make progress today?</p></div><div className="flex gap-3"><button onClick={() => router.push("/training")} className="flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-200"><Sparkles className="h-4 w-4" />Generate notes</button><button aria-label="Search dashboard" className="rounded-full border border-white/10 bg-white/5 p-3 text-slate-400 hover:text-cyan-300"><Search className="h-4 w-4" /></button></div></div>
+          <section className="relative overflow-hidden rounded-2xl border border-cyan-300/15 bg-white/[.045] p-6 shadow-2xl shadow-cyan-950/20 backdrop-blur-xl md:p-8"><div className="absolute right-0 top-0 h-full w-1/2 bg-gradient-to-l from-cyan-300/10 to-transparent" /><div className="relative flex flex-col items-center gap-7 md:flex-row"><div className="flex h-32 w-32 shrink-0 items-center justify-center rounded-full border-8 border-cyan-300/15 bg-[#0f131c] text-center shadow-[0_0_30px_rgba(76,215,246,.15)]"><div><span className="block text-xs uppercase text-slate-500">Lvl</span><span className="text-4xl font-black text-cyan-300">14</span></div></div><div className="w-full flex-1"><div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end"><div><h2 className="text-xl font-bold text-white">Expert Scholar</h2><p className="mt-1 text-sm text-slate-400">Top 5% in Grade 8 · Keep up the streak!</p></div><p className="text-sm"><span className="font-bold text-cyan-300">14,350</span><span className="text-slate-500"> / 15,000 XP</span></p></div><div className="mt-5 h-2 overflow-hidden rounded-full bg-slate-800"><div className="h-full w-[95%] rounded-full bg-gradient-to-r from-cyan-300 to-emerald-300 shadow-[0_0_12px_rgba(76,215,246,.6)]" /></div><div className="mt-4 flex flex-wrap gap-2"><Badge icon={<CheckCircle2 />} label="Math Olympian" /><Badge icon={<GraduationCap />} label="Lab Rat" tone="emerald" /><Badge icon={<Trophy />} label="Historian locked" muted /></div></div></div></section>
+          <section><SectionTitle icon={<BookOpen />} title="Subject mastery" /><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{subjects.map(([subject, detail, progress, bar, color]) => <div key={subject} className="rounded-xl border border-white/10 bg-white/[.035] p-5 transition hover:-translate-y-1 hover:border-cyan-300/30"><div className="mb-5 flex items-start justify-between"><div className={`flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 ${color}`}><BookOpen className="h-5 w-5" /></div><span className={`rounded-md border border-white/10 bg-white/5 px-2 py-1 text-xs font-bold ${color}`}>{progress}</span></div><h3 className="font-semibold text-white">{subject}</h3><p className="mt-1 text-xs text-slate-500">{detail}</p><div className="mt-5 h-1.5 rounded-full bg-slate-800"><div className={`h-full rounded-full ${bar}`} style={{ width: progress }} /></div></div>)}</div></section>
+          <div className="grid gap-5 lg:grid-cols-12"><section className="rounded-2xl border border-white/10 bg-white/[.035] p-6 lg:col-span-4"><SectionTitle icon={<FileText />} title="Syllabus tracker" /><div className="space-y-6 border-l-2 border-cyan-300/50 pl-5"><Tracker title="Rational Numbers" meta="Math · Completed" done /><Tracker title="Microorganisms" meta="Science · In progress (45%)" active /><Tracker title="Synthetic Fibres" meta="Science · Up next" /></div><button className="mt-6 w-full rounded-lg border border-white/10 py-2.5 text-sm text-slate-300 transition hover:border-cyan-300/40 hover:text-white">View full syllabus</button></section><section className="rounded-2xl border border-white/10 bg-white/[.035] p-6 lg:col-span-5"><SectionTitle icon={<CheckCircle2 />} title="Daily focus" /><div className="space-y-3">{["Review Rational Numbers notes", "Take Microorganisms Quiz", "Generate notes for Ch 3 History"].map((item, index) => <label key={item} className={`flex cursor-pointer items-start gap-3 rounded-xl border p-3 transition ${focusItems[index] ? "border-emerald-300/30 bg-emerald-300/10" : index === 1 ? "border-cyan-300/30 bg-cyan-300/5" : "border-white/10 bg-white/[.025]"}`}><input type="checkbox" checked={focusItems[index]} onChange={() => toggleFocus(index)} className="mt-1 accent-cyan-300" /><span className="flex-1 text-sm text-slate-200"><span className={focusItems[index] ? "line-through opacity-60" : ""}>{item}</span><span className="mt-1 block text-xs text-slate-500">{index === 0 ? "Completed · Earned 50 XP" : index === 1 ? "+150 XP · Due today" : "Recommended next step"}</span></span></label>)}</div></section><section className="space-y-5 lg:col-span-3"><div className="rounded-2xl border border-white/10 bg-white/[.035] p-6"><div className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-300"><span className="h-2 w-2 animate-pulse rounded-full bg-rose-300" />Live now</div><h3 className="font-bold text-white">Math doubt clearing</h3><p className="mt-1 text-xs text-slate-500">Join 42 other students</p><button className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-white py-2.5 text-sm font-bold text-slate-950 transition hover:bg-cyan-200"><Video className="h-4 w-4" />Join session</button></div><div className="rounded-2xl border border-white/10 bg-white/[.035] p-6"><SectionTitle icon={<Trophy />} title="Global rank" /><div className="space-y-3">{[["1", "Alex M.", "15.2k"], ["2", "You", "14.3k"], ["3", "Sarah K.", "13.8k"]].map(([rank, name, points]) => <div key={rank} className={`flex items-center justify-between rounded-lg p-2 text-sm ${rank === "2" ? "border border-cyan-300/20 bg-cyan-300/10" : "bg-white/[.025]"}`}><span className="flex items-center gap-2"><span className="w-3 text-xs text-slate-500">{rank}</span><span className="flex h-6 w-6 items-center justify-center rounded-full bg-cyan-300/10 text-xs font-bold text-cyan-300">{name[0]}</span><span className={rank === "2" ? "font-bold text-cyan-300" : "text-slate-300"}>{name}</span></span><span className="text-xs text-slate-400">{points}</span></div>)}</div></div></section></div>
++          <div className="grid gap-5 lg:grid-cols-12"><section className="lg:col-span-8"><SectionTitle icon={<Sparkles />} title="Quick actions" /><div className="grid grid-cols-2 gap-3 sm:grid-cols-4">{[[Trophy, "Quick quiz"], [CalendarDays, "Planner"], [Mic2, "Speech coach"], [FolderOpen, "My notes"]].map(([Icon, label]) => { const ActionIcon = Icon as typeof Trophy; return <button key={label as string} onClick={() => router.push("/training")} className="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-white/[.035] p-5 text-center transition hover:border-cyan-300/30 hover:bg-white/[.07]"><ActionIcon className="mb-3 h-7 w-7 text-cyan-300" /><span className="text-sm font-semibold text-white">{label as string}</span></button>; })}</div></section><section className="rounded-2xl border border-white/10 bg-white/[.035] p-6 lg:col-span-4"><SectionTitle icon={<FileText />} title="Recent notes" /><div className="space-y-2">{["Rational Numbers - Grade 8", "Linear Equations quick summary", "Microorganisms: Friend and Foe"].map((note) => <Link key={note} href="/training" className="flex items-center gap-3 rounded-lg p-2 transition hover:bg-white/5"><span className="flex h-9 w-9 shrink-0 items-center justify-center rounded bg-rose-300/10 text-rose-300"><FileText className="h-4 w-4" /></span><span className="min-w-0 flex-1 truncate text-xs text-slate-300">{note}</span><ChevronRight className="h-4 w-4 text-slate-600" /></Link>)}</div></section></div>
++          <section className="rounded-2xl border border-cyan-300/20 bg-cyan-300/[.04] p-6"><div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center"><div><p className="text-xs font-bold uppercase tracking-widest text-cyan-300">Join a live committee</p><h2 className="mt-2 text-xl font-bold text-white">Have a room code? Enter the floor.</h2></div><form onSubmit={joinSession} className="flex w-full gap-2 sm:w-auto"><input value={roomCode} onChange={(event) => setRoomCode(event.target.value)} placeholder="UNSC-ARCTIC-2026" className="min-w-0 flex-1 rounded-lg border border-white/10 bg-slate-950/70 px-3 py-2.5 text-xs text-white outline-none focus:border-cyan-300 sm:w-52" /><button className="rounded-lg bg-cyan-300 px-4 py-2.5 text-sm font-bold text-slate-950 transition hover:bg-cyan-200"><Play className="h-4 w-4" /></button></form></div></section>
++        </div>
++      </main>
++    </div>
++  );
++}
++
++function SectionTitle({ icon, title }: { icon: React.ReactNode; title: string }) {
++  return <h2 className="mb-5 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-slate-200"><span className="text-cyan-300">{icon}</span>{title}</h2>;
++}
++
++function Badge({ icon, label, tone, muted }: { icon: React.ReactNode; label: string; tone?: string; muted?: boolean }) {
++  return <span className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs ${muted ? "border-white/10 text-slate-600" : tone === "emerald" ? "border-emerald-300/20 bg-emerald-300/10 text-emerald-300" : "border-cyan-300/20 bg-cyan-300/10 text-cyan-300"}`}>{icon}<span>{label}</span></span>;
++}
++
++function Tracker({ title, meta, done, active }: { title: string; meta: string; done?: boolean; active?: boolean }) {
++  return <div className="relative"><span className={`absolute -left-[27px] top-0 flex h-4 w-4 items-center justify-center rounded-full border-2 ${done ? "border-cyan-300 bg-cyan-300 text-slate-950" : active ? "border-cyan-300 bg-[#0f131c]" : "border-slate-700 bg-[#0f131c]"}`}>{done && <Check className="h-2.5 w-2.5" />}</span><p className="text-sm font-semibold text-white">{title}</p><p className={`mt-1 text-xs ${active ? "text-cyan-300" : "text-slate-500"}`}>{meta}</p>{active && <div className="mt-3 h-1.5 rounded-full bg-slate-800"><div className="h-full w-[45%] rounded-full bg-cyan-300" /></div>}</div>;
++}

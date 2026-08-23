@@ -49,12 +49,12 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-6">
-      <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl">
+    <div className="delegate-page flex min-h-screen items-center justify-center p-6 text-slate-100">
+      <div className="delegate-panel w-full max-w-md rounded-2xl p-8">
         <div className="flex flex-col items-center text-center mb-6">
           <Link href="/" className="flex items-center space-x-2 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center shadow-md shadow-indigo-600/30">
-              <Globe2 className="w-6 h-6 text-white" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-300/10 text-cyan-300 shadow-lg shadow-cyan-500/10">
+              <Globe2 className="h-6 w-6" />
             </div>
           </Link>
           <h2 className="text-2xl font-bold text-white">
@@ -76,7 +76,7 @@ export default function AuthPage() {
               setErrorMessage("");
             }}
             className={`py-2 text-xs font-semibold rounded-lg transition ${
-              isLogin ? "bg-indigo-600 text-white shadow-sm" : "text-slate-400 hover:text-white"
+              isLogin ? "bg-cyan-300 text-slate-950 shadow-sm" : "text-slate-400 hover:text-white"
             }`}
           >
             Sign In
@@ -89,7 +89,7 @@ export default function AuthPage() {
               setErrorMessage("");
             }}
             className={`py-2 text-xs font-semibold rounded-lg transition ${
-              !isLogin ? "bg-indigo-600 text-white shadow-sm" : "text-slate-400 hover:text-white"
+              !isLogin ? "bg-cyan-300 text-slate-950 shadow-sm" : "text-slate-400 hover:text-white"
             }`}
           >
             New User (Register)
@@ -122,7 +122,7 @@ export default function AuthPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Jane Doe"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 pl-9 text-sm text-white focus:border-cyan-300 focus:outline-none"
                 />
               </div>
             </div>
@@ -138,7 +138,7 @@ export default function AuthPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@delegatex.org or delegate@mun.org"
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 pl-9 text-sm text-white focus:border-cyan-300 focus:outline-none"
               />
             </div>
           </div>
@@ -153,14 +153,14 @@ export default function AuthPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 pl-9 text-sm text-white focus:border-cyan-300 focus:outline-none"
               />
             </div>
           </div>
 
           <button
             type="submit"
-            className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-semibold transition mt-2 flex items-center justify-center space-x-1.5 shadow-md shadow-indigo-600/20"
+            className="mt-2 flex w-full items-center justify-center space-x-1.5 rounded-lg bg-cyan-300 py-2.5 text-sm font-semibold text-slate-950 shadow-md shadow-cyan-500/20 transition hover:bg-cyan-200"
           >
             <span>{isLogin ? "Sign In" : "Register Account"}</span>
             <ArrowRight className="w-4 h-4" />
@@ -168,7 +168,7 @@ export default function AuthPage() {
         </form>
 
         <div className="mt-6 pt-4 border-t border-slate-800 text-center">
-          <Link href="/" className="text-xs text-indigo-400 hover:underline">
+          <Link href="/" className="text-xs text-cyan-300 hover:underline">
             ← Return to Homepage
           </Link>
         </div>

@@ -5,30 +5,30 @@ import { Globe2, BookOpen, LogIn } from "lucide-react";
 
 export default function Navbar() {
   return (
-    <header className="h-16 border-b border-slate-800 bg-slate-950/80 backdrop-blur fixed top-0 left-0 right-0 z-50 px-6 flex items-center justify-between">
+    <header className="fixed left-1/2 top-4 z-50 flex h-14 w-[calc(100%-2rem)] max-w-6xl -translate-x-1/2 items-center justify-between rounded-full border border-white/10 bg-slate-950/70 px-5 shadow-2xl shadow-cyan-950/30 backdrop-blur-xl sm:px-7">
       <Link href="/" className="flex items-center space-x-3">
-        <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center shadow-md shadow-indigo-600/30">
-          <Globe2 className="w-5 h-5 text-white" />
+        <div className="flex h-9 w-9 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-300/10 text-cyan-300">
+          <Globe2 className="h-5 w-5" />
         </div>
-        <span className="font-bold text-lg text-white tracking-tight">
-          Delegate<span className="text-indigo-400">X</span>
+        <span className="text-lg font-bold tracking-tight text-white">
+          Delegate<span className="text-emerald-300">X</span>
         </span>
       </Link>
 
-      <nav className="flex items-center space-x-6 text-sm font-medium text-slate-300">
+      <nav className="flex items-center gap-3 text-sm font-medium text-slate-400 sm:gap-6">
         <Link
           href="/training"
-          className="hover:text-white transition flex items-center space-x-1.5"
+          className="hidden items-center gap-1.5 transition hover:text-cyan-300 sm:flex"
         >
-          <BookOpen className="w-4 h-4 text-indigo-400" />
+          <BookOpen className="h-4 w-4 text-cyan-300" />
           <span>Training Modules</span>
         </Link>
         <Link
           href="/auth"
-          className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-medium transition shadow-sm"
+          className="flex items-center gap-2 rounded-full bg-cyan-300 px-4 py-2 text-sm font-bold text-slate-950 transition hover:bg-cyan-200"
         >
-          <LogIn className="w-4 h-4" />
-          <span>Sign In / Register</span>
+          <LogIn className="h-4 w-4" />
+          <span>Sign in</span>
         </Link>
       </nav>
     </header>

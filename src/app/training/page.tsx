@@ -31,7 +31,7 @@ export default function TrainingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 pt-16 flex flex-col">
+    <div className="delegate-page min-h-screen text-slate-100 pt-24 flex flex-col">
       <Navbar />
 
       <main className="max-w-4xl mx-auto px-6 py-12 flex-1 w-full space-y-8">
@@ -51,13 +51,13 @@ export default function TrainingPage() {
             return (
               <div
                 key={idx}
-                className="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition space-y-3"
+                className="delegate-panel space-y-3 rounded-xl p-5 transition hover:-translate-y-1 hover:border-cyan-300/40"
               >
                 <div className="flex items-center justify-between">
-                  <div className="p-2.5 bg-indigo-500/10 text-indigo-400 rounded-xl border border-indigo-500/20">
+                  <div className="rounded-xl border border-cyan-300/20 bg-cyan-300/10 p-2.5 text-cyan-300">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <span className="text-[11px] font-mono text-slate-500 bg-slate-950 px-2 py-1 rounded border border-slate-800">
+                  <span className="rounded border border-white/10 bg-slate-950/70 px-2 py-1 font-mono text-[11px] text-slate-500">
                     {m.duration}
                   </span>
                 </div>
