@@ -16,6 +16,7 @@ export default function CommitteeLiveRoom() {
     "United Kingdom",
   ]);
   const [newCountry, setNewCountry] = useState("");
+  const [queueManager, setQueueManager] = useState<"ADMIN" | "EXECUTIVE_BOARD">("EXECUTIVE_BOARD");
   const [placardRaised, setPlacardRaised] = useState(false);
 
   useEffect(() => {
@@ -160,7 +161,15 @@ export default function CommitteeLiveRoom() {
             ))}
           </div>
 
-          <form onSubmit={addSpeaker} className="mt-4 pt-4 border-t border-slate-800 flex gap-2">
+          <form onSubmit={addSpeaker} className="mt-4 space-y-2 border-t border-slate-800 pt-4">
+            <div className="flex items-center justify-between">
+              <label htmlFor="committee-queue-manager" className="text-xs font-semibold text-slate-300">Add delegation to queue</label>
+              <select id="committee-queue-manager" value={queueManager} onChange={(e) => setQueueManager(e.target.value as "ADMIN" | "EXECUTIVE_BOARD")} className="rounded-md border border-slate-800 bg-slate-950 px-2 py-1 text-[10px] text-slate-300">
+                <option value="EXECUTIVE_BOARD">Executive Board</option>
+                <option value="ADMIN">Admin</option>
+              </select>
+            </div>
+            <div className="flex gap-2">
             <input
               type="text"
               placeholder="Add Country to queue..."
@@ -174,6 +183,7 @@ export default function CommitteeLiveRoom() {
             >
               <Plus className="w-4 h-4" />
             </button>
+            </div>
           </form>
         </div>
       </main>
