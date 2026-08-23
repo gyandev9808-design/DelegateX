@@ -4,8 +4,6 @@ import {
   Award,
   BookOpen,
   CalendarDays,
-  Check,
-  ChevronRight,
   Globe2,
   Landmark,
   MessageSquareText,
@@ -37,7 +35,6 @@ export default function LandingPage() {
           <a className="border-b-2 border-cyan-300 pb-1 font-semibold text-cyan-300" href="#briefs">Committee Briefs</a>
           <a className="transition hover:text-cyan-300" href="#features">Delegate Toolkit</a>
           <a className="transition hover:text-cyan-300" href="#workflow">How It Works</a>
-          <a className="transition hover:text-cyan-300" href="#plans">Plans</a>
         </nav>
         <Link href="/auth" className="rounded-full bg-cyan-300 px-4 py-2 text-sm font-bold text-slate-950 transition hover:bg-cyan-200 sm:px-6">Enter DelegateX</Link>
       </header>
@@ -70,16 +67,10 @@ export default function LandingPage() {
 
         <section id="workflow" className="border-y border-white/10 bg-slate-900/40 px-5 py-24 sm:px-8"><div className="mx-auto max-w-6xl"><div className="mb-14 text-center"><h2 className="text-3xl font-bold text-white sm:text-4xl">From blank page to opening speech.</h2><p className="mt-4 text-slate-400">A sharper preparation loop in three deliberate steps.</p></div><div className="grid gap-5 md:grid-cols-3">{[["01", "Choose your committee", "Pick your conference, committee, country, and agenda.", Landmark], ["02", "Build your position", "Turn reliable research into a clear, defensible policy line.", BookOpen], ["03", "Practise the room", "Rehearse your delivery and join a simulation built for growth.", Mic2]].map(([number, title, description, Icon]) => { const StepIcon = Icon as typeof BookOpen; return <div key={number as string} className="relative rounded-xl border border-white/10 bg-[#0c1422] p-7"><span className="text-5xl font-black text-cyan-300/20">{number as string}</span><StepIcon className="absolute right-7 top-7 h-5 w-5 text-emerald-300" /><h3 className="mt-8 font-bold text-white">{title as string}</h3><p className="mt-2 text-sm leading-6 text-slate-400">{description as string}</p></div>; })}</div></div></section>
 
-        <section id="plans" className="px-5 py-24 sm:px-8"><div className="mx-auto max-w-5xl"><div className="mb-14 text-center"><h2 className="text-3xl font-bold text-white sm:text-4xl">Choose your preparation pace.</h2><p className="mt-4 text-slate-400">Start free. Upgrade when your next conference gets serious.</p></div><div className="grid gap-5 md:grid-cols-2"><div className="rounded-xl border border-white/10 bg-white/[.035] p-8"><h3 className="text-xl font-bold text-white">Delegate</h3><div className="my-5 text-4xl font-black text-cyan-300">Free</div><PlanItems items={["Core training modules", "Committee research templates", "One active conference plan"]} /><Link href="/training" className="mt-8 flex w-full items-center justify-center rounded-full border border-white/15 py-3 font-semibold text-white transition hover:border-cyan-300">Start exploring</Link></div><div className="relative rounded-xl border border-cyan-300/50 bg-cyan-300/[.07] p-8 shadow-2xl shadow-cyan-950/30"><span className="absolute -top-3 right-7 rounded-full bg-cyan-300 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-950">Most popular</span><h3 className="text-xl font-bold text-white">Secretariat</h3><div className="my-5 text-4xl font-black text-emerald-300">₹199 <span className="text-sm font-normal text-slate-400">/ month</span></div><PlanItems items={["Unlimited briefs and rehearsals", "Live committee simulations", "Advanced delegate analytics", "Priority support"]} /><Link href="/auth" className="mt-8 flex w-full items-center justify-center gap-2 rounded-full bg-cyan-300 py-3 font-bold text-slate-950 transition hover:bg-cyan-200">Choose Secretariat <ChevronRight className="h-4 w-4" /></Link></div></div></div></section>
-
         <section className="border-t border-white/10 bg-slate-900/30 px-5 py-24 sm:px-8"><div className="mx-auto max-w-3xl text-center"><p className="text-xl font-medium leading-9 text-slate-200 sm:text-2xl">&quot;DelegateX made my preparation feel less like endless tabs and more like an actual strategy. I walked into committee knowing exactly what I wanted to achieve.&quot;</p><div className="mt-8 flex items-center justify-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-300/15 font-bold text-emerald-300">A</span><div className="text-left"><p className="font-bold text-white">Ananya R.</p><p className="text-sm text-slate-500">Best Delegate · Class 11</p></div></div></div></section>
       </main>
 
       <footer className="border-t border-white/10 bg-[#050912] px-5 py-12 sm:px-8"><div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-7 md:flex-row"><Link href="/" className="flex items-center gap-2 text-lg font-bold text-cyan-300"><Globe2 className="h-5 w-5" /> Delegate<span className="text-emerald-300">X</span></Link><div className="flex flex-wrap justify-center gap-5 text-sm text-slate-500"><Link className="hover:text-cyan-300" href="/training">Training</Link><Link className="hover:text-cyan-300" href="/committee">Committees</Link><Link className="hover:text-cyan-300" href="/auth">Sign in</Link><a className="hover:text-cyan-300" href="mailto:support@delegatex.app">Support</a></div><p className="text-xs text-slate-600">© 2026 DelegateX</p></div></footer>
     </div>
   );
-}
-
-function PlanItems({ items }: { items: string[] }) {
-  return <ul className="space-y-3 text-sm text-slate-300">{items.map((item) => <li key={item} className="flex items-center gap-3"><Check className="h-4 w-4 text-emerald-300" />{item}</li>)}</ul>;
 }
