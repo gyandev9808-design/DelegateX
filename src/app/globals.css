@@ -9,5 +9,16 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #020617;
+  background-color: #080d18;
+  color: #e2e8f0;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
 }
