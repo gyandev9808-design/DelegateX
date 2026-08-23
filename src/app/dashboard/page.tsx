@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Award, BookOpen, CalendarDays, Check, CheckCircle2, ChevronRight, FileText, FolderOpen, GraduationCap, LayoutDashboard, Library, LogOut, Menu, MessageSquare, Mic2, Moon, Play, Search, Sparkles, Trophy, Video, X } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const subjects = [
   ["Mathematics", "Algebra & Geometry", "100%", "bg-cyan-300", "text-cyan-300"],
   ["Science", "Physics & Chemistry", "60%", "bg-emerald-300", "text-emerald-300"],
