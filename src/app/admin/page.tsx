@@ -311,7 +311,7 @@ export default function AdminDashboard() {
                 required
                 value={newMeetingUrl}
                 onChange={(e) => setNewMeetingUrl(e.target.value)}
-                placeholder="Google Meet URL (https://meet.google.com/...)"
+                placeholder="https://meet.google.com/qru-wspg-nzr"
                 pattern="https://meet\\.google\\.com/.*"
                 className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-700"
               />
@@ -402,7 +402,7 @@ export default function AdminDashboard() {
                 <form onSubmit={(e) => { handleCreateMeeting(e); setActiveModal(null); }} className="space-y-2">
                   <input required value={newMeetingTitle} onChange={(e) => setNewMeetingTitle(e.target.value)} placeholder="Committee title" className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900" />
                   <input value={newMeetingTopic} onChange={(e) => setNewMeetingTopic(e.target.value)} placeholder="Agenda or topic" className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900" />
-                  <input required type="url" value={newMeetingUrl} onChange={(e) => setNewMeetingUrl(e.target.value)} placeholder="Google Meet URL" pattern="https://meet\\.google\\.com/.*" className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900" />
+                  <input required type="url" value={newMeetingUrl} onChange={(e) => setNewMeetingUrl(e.target.value)} placeholder="https://meet.google.com/qru-wspg-nzr" pattern="https://meet\\.google\\.com/.*" className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900" />
                   <button type="submit" className="w-full rounded-lg bg-slate-800 py-2.5 text-sm font-semibold text-white hover:bg-slate-700">Create meeting</button>
                 </form>
                 <div className="space-y-2 border-t border-slate-100 pt-4">
