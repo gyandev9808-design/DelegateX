@@ -4,7 +4,7 @@ import { useState } from "react";
 import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Award, BookOpen, CalendarDays, Check, CheckCircle2, ChevronRight, FileText, FolderOpen, GraduationCap, LayoutDashboard, Library, LogOut, Menu, MessageSquare, Mic2, Moon, Play, Search, Sparkles, Trophy, Video, X } from "lucide-react";
+import { BookOpen, Check, CheckCircle2, ChevronRight, FileText, GraduationCap, LogOut, Menu, MessageSquare, Mic2, Moon, Play, Search, Sparkles, Trophy, Video, X } from "lucide-react";
 
 const subjects = [
   ["Policy Research", "Sources & country position", "100%", "bg-cyan-300", "text-cyan-300"],
@@ -12,8 +12,6 @@ const subjects = [
   ["Procedure", "Motions & caucuses", "20%", "bg-violet-300", "text-violet-300"],
   ["Negotiation", "Alliances & resolutions", "70%", "bg-cyan-400", "text-cyan-400"],
 ];
-
-const menuItems = [[LayoutDashboard, "Dashboard", "/dashboard"], [Sparkles, "Country Briefs", "/dashboard/notes"], [Trophy, "Practice Motions", "/dashboard/quiz"], [CalendarDays, "Conference Plan", "/dashboard/calendar"], [FileText, "Position Papers", "/dashboard/worksheets"], [Library, "Talking Points", "/dashboard/flashcards"]];
 
 export default function DelegateDashboard() {
   const router = useRouter();
@@ -36,10 +34,7 @@ export default function DelegateDashboard() {
       </header>
       <aside className={`${menuOpen ? "flex" : "hidden"} fixed inset-0 z-40 w-64 flex-col border-r border-white/10 bg-[#181b25] p-4 pt-24 md:flex`}>
         <Link href="/dashboard" className="mb-8 flex items-center gap-3 px-2"><div className="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-300/10 text-cyan-300 shadow-lg shadow-cyan-500/20"><GraduationCap className="h-6 w-6" /></div><div><p className="text-2xl font-extrabold text-cyan-300">DelegateX</p><p className="text-xs text-slate-500">Delegate workspace</p></div></Link>
-        <p className="mb-2 px-4 text-[11px] font-semibold uppercase tracking-widest text-slate-500">Menu</p>
-        <nav className="space-y-1">{menuItems.map(([Icon, label, href], index) => { const NavIcon = Icon as typeof LayoutDashboard; return <Link key={label as string} href={href as string} onClick={() => setMenuOpen(false)} className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition ${index === 0 ? "border border-cyan-300/30 bg-cyan-300/10 text-cyan-300 shadow-lg shadow-cyan-950/20" : "text-slate-400 hover:bg-white/5 hover:text-white"}`}><NavIcon className="h-4 w-4" />{label as string}</Link>; })}</nav>
-        <p className="mb-2 mt-9 px-4 text-[11px] font-semibold uppercase tracking-widest text-slate-500">Library</p>
-        <nav className="space-y-1"><Link href="/dashboard/mailbox" className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-400 transition hover:bg-white/5 hover:text-white"><FolderOpen className="h-4 w-4" />My Notes</Link><Link href="/dashboard/performance" className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-400 transition hover:bg-white/5 hover:text-white"><Award className="h-4 w-4" />Achievements</Link><Link href="/dashboard/messages" className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-400 transition hover:bg-white/5 hover:text-white"><MessageSquare className="h-4 w-4" />Doubt Clarifier</Link></nav>
+        <nav className="mt-2"><Link href="/dashboard/messages" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 rounded-xl border border-cyan-300/20 bg-cyan-300/10 px-4 py-3 text-sm font-semibold text-cyan-300 transition hover:border-cyan-300/40 hover:bg-cyan-300/15"><MessageSquare className="h-4 w-4" />Doubt Clarifier</Link></nav>
         <div className="mt-auto border-t border-white/10 pt-4"><div className="flex items-center gap-3 px-3 py-2"><div className="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-300/10 font-bold text-cyan-300">DX</div><div className="min-w-0"><p className="truncate text-sm font-semibold text-white">Delegate</p><p className="truncate text-xs text-slate-500">MUN Delegate · Active</p></div></div><div className="mt-2 flex justify-between px-3 text-slate-500"><button aria-label="Dark mode" className="rounded-lg p-2 hover:bg-white/5 hover:text-cyan-300"><Moon className="h-4 w-4" /></button><Link href="/auth" aria-label="Sign out" className="rounded-lg p-2 hover:bg-white/5 hover:text-rose-300"><LogOut className="h-4 w-4" /></Link></div></div>
       </aside>
 
