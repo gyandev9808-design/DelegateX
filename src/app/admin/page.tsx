@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   ShieldCheck,
@@ -40,6 +41,7 @@ interface MeetingRoom {
 }
 
 export default function AdminDashboard() {
+  const router = useRouter();
   const [activeModal, setActiveModal] = useState<"MEETING" | "STAFF" | "ROSTER" | null>(null);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [notice, setNotice] = useState("");
@@ -146,10 +148,10 @@ export default function AdminDashboard() {
         </div>
 
         <div className="flex items-center space-x-3 text-slate-200">
-          <button onClick={() => showNotice("Search is ready for your workspace.")} aria-label="Search" className="p-2 hover:bg-slate-600 rounded-full transition">
+          <button onClick={() => router.push("/admin/search")} aria-label="Search" className="p-2 hover:bg-slate-600 rounded-full transition">
             <Search className="w-5 h-5" />
           </button>
-          <button onClick={() => showNotice("You are all caught up.")} aria-label="Notifications" className="p-2 hover:bg-slate-600 rounded-full transition relative">
+          <button onClick={() => router.push("/admin/notifications")} aria-label="Notifications" className="p-2 hover:bg-slate-600 rounded-full transition relative">
             <Bell className="w-5 h-5" />
             <span className="w-2 h-2 bg-indigo-400 rounded-full absolute top-1.5 right-1.5" />
           </button>
@@ -192,7 +194,7 @@ export default function AdminDashboard() {
                 <span className="text-xs font-medium text-slate-700 mt-2">Country Roster</span>
               </button>
 
-              <button onClick={() => showNotice("Circulars are ready to be configured.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/admin/circulars")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <FileCheck className="w-6 h-6" />
                 </div>
@@ -209,28 +211,28 @@ export default function AdminDashboard() {
               Secretariat & Oversight
             </h2>
             <div className="grid grid-cols-4 gap-y-5 gap-x-3 text-center">
-              <button onClick={() => showNotice("Awards and certificates are ready to be configured.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/admin/awards")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Award className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Awards & Certs</span>
               </button>
 
-              <button onClick={() => showNotice("Roll call lists are ready to be configured.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/admin/roll-call")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Calendar className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Roll Call List</span>
               </button>
 
-              <button onClick={() => showNotice("Delegate management is ready to be connected.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/admin/delegates")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Users className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Delegates (120)</span>
               </button>
 
-              <button onClick={() => showNotice("Committee management is ready to be connected.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/admin/committees")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Layers className="w-6 h-6" />
                 </div>
@@ -247,14 +249,14 @@ export default function AdminDashboard() {
               Communication & Broadcast
             </h2>
             <div className="grid grid-cols-4 gap-y-5 gap-x-3 text-center">
-              <button onClick={() => showNotice("Broadcast messaging is ready to be configured.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/admin/broadcasts")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Mail className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Broadcast SMS</span>
               </button>
 
-              <button onClick={() => showNotice("Rules of Procedure settings are ready to be configured.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/admin/rop-config")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Settings className="w-6 h-6" />
                 </div>

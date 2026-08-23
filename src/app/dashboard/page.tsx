@@ -76,10 +76,10 @@ export default function DelegateDashboard() {
         </div>
 
         <div className="flex items-center space-x-3 text-slate-200">
-          <button onClick={() => showNotice("Search is ready for your workspace.")} aria-label="Search" className="p-2 hover:bg-slate-600 rounded-full transition">
+          <button onClick={() => router.push("/dashboard/search")} aria-label="Search" className="p-2 hover:bg-slate-600 rounded-full transition">
             <Search className="w-5 h-5" />
           </button>
-          <button onClick={() => showNotice("You are all caught up.")} aria-label="Notifications" className="p-2 hover:bg-slate-600 rounded-full transition relative">
+          <button onClick={() => router.push("/dashboard/notifications")} aria-label="Notifications" className="p-2 hover:bg-slate-600 rounded-full transition relative">
             <Bell className="w-5 h-5" />
             <span className="w-2 h-2 bg-indigo-400 rounded-full absolute top-1.5 right-1.5" />
           </button>
@@ -145,7 +145,7 @@ export default function DelegateDashboard() {
               <div className="flex items-center justify-between"><span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Delegate standing</span><CheckCircle2 className="h-4 w-4 text-emerald-600" /></div>
               <p className="mt-3 text-lg font-bold text-slate-900">Good momentum</p>
               <p className="mt-1 text-xs text-slate-500">3 sessions attended this month</p>
-              <button onClick={() => showNotice("Your delegate report is being prepared.")} className="mt-3 text-xs font-semibold text-emerald-700 hover:text-emerald-900">View report <ArrowRight className="ml-1 inline h-3.5 w-3.5" /></button>
+              <button onClick={() => router.push("/dashboard/report")} className="mt-3 text-xs font-semibold text-emerald-700 hover:text-emerald-900">View report <ArrowRight className="ml-1 inline h-3.5 w-3.5" /></button>
             </div>
           </section>
           
@@ -162,7 +162,7 @@ export default function DelegateDashboard() {
                 <span className="text-xs font-medium text-slate-700 mt-2">Syllabus</span>
               </Link>
 
-              <button onClick={() => showNotice("SMS history will appear here after your first message.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/dashboard/messages")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <MessageSquare className="w-6 h-6" />
                 </div>
@@ -176,7 +176,7 @@ export default function DelegateDashboard() {
                 <span className="text-xs font-medium text-slate-700 mt-2">Homework</span>
               </Link>
 
-              <button onClick={() => showNotice("No circulars are available yet.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/dashboard/circulars")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <FileCheck className="w-6 h-6" />
                 </div>
@@ -200,7 +200,7 @@ export default function DelegateDashboard() {
                 <span className="text-xs font-medium text-slate-700 mt-2">Achievements</span>
               </Link>
 
-              <button onClick={() => showNotice("Attendance records will appear after your first session.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/dashboard/attendance")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Calendar className="w-6 h-6" />
                 </div>
@@ -214,28 +214,28 @@ export default function DelegateDashboard() {
                 <span className="text-xs font-medium text-slate-700 mt-2">Homework</span>
               </Link>
 
-              <button onClick={() => showNotice("Hostel attendance is not available yet.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/dashboard/hostel-attendance")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Clock className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Hostel Attendance</span>
               </button>
 
-              <button onClick={() => showNotice("Performance tracking is coming soon.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/dashboard/performance")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Mic className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Performance</span>
               </button>
 
-              <button onClick={() => showNotice("No remarks have been posted yet.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/dashboard/remarks")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Remarks</span>
               </button>
 
-              <button onClick={() => showNotice("Results will appear after an assessment.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/dashboard/results")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <FolderOpen className="w-6 h-6" />
                 </div>
@@ -259,28 +259,28 @@ export default function DelegateDashboard() {
               Communication
             </h2>
             <div className="grid grid-cols-4 gap-y-5 gap-x-3 text-center">
-              <button onClick={() => showNotice("Your mailbox is empty.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/dashboard/mailbox")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Mail className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Mail Box</span>
               </button>
 
-              <button onClick={() => showNotice("Your calendar has no upcoming events.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/dashboard/calendar")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Calendar className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">Calendar</span>
               </button>
 
-              <button onClick={() => showNotice("No school news has been posted yet.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/dashboard/news")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <Newspaper className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-medium text-slate-700 mt-2">School News</span>
               </button>
 
-              <button onClick={() => showNotice("The image gallery is empty.")} className="flex flex-col items-center group cursor-pointer">
+              <button onClick={() => router.push("/dashboard/gallery")} className="flex flex-col items-center group cursor-pointer">
                 <div className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-slate-200 transition shadow-sm">
                   <ImageIcon className="w-6 h-6" />
                 </div>
