@@ -49,7 +49,7 @@ export default function AuthPage() {
       }
 
       try {
-        const response = await fetch("/api/auth/register", {
+        const response = await fetch("/api/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email: normalizedEmail, password }),
@@ -65,10 +65,7 @@ export default function AuthPage() {
           redirect: false,
         });
         if (loginResult?.error) {
-          setStatusMessage("Account registered successfully! Please sign in.");
-          setIsLogin(true);
-          setPassword("");
-          setName("");
+          router.push("/dashboard");
           return;
         }
         router.push("/dashboard");
