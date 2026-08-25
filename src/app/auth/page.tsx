@@ -65,7 +65,10 @@ export default function AuthPage() {
           redirect: false,
         });
         if (loginResult?.error) {
-          router.push("/dashboard");
+          setStatusMessage("Account created. Please sign in with your new account.");
+          setIsLogin(true);
+          setPassword("");
+          setName("");
           return;
         }
         router.push("/dashboard");
