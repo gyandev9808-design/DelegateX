@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 import { Globe2, Mail, Lock, User, ShieldCheck, ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
 
 export default function AuthPage() {
@@ -15,7 +16,7 @@ export default function AuthPage() {
   const [statusMessage, setStatusMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatusMessage("");
     setErrorMessage("");
@@ -35,16 +36,45 @@ export default function AuthPage() {
         return;
       }
 
-      setErrorMessage("Incorrect email or password. Please check your details and try again.");
+      const result = await signIn("credentials", { email: normalizedEmail, password, redirect: false });
+      if (result?.error) {
+        setErrorMessage("Incorrect email or password. Please check your details and try again.");
+      } else {
+        router.push("/dashboard");
+      }
     } else {
       if (normalizedEmail === "admin@delegatex.org") {
         setErrorMessage("This email is reserved for the Master Admin account.");
         return;
       }
 
-      setStatusMessage("Account registered successfully! Please sign in.");
-      setIsLogin(true);
-      setPassword("");
+      try {
+        const response = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email: normalizedEmail, password }),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          setErrorMessage(data.error || "Registration failed. Please try again.");
+          return;
+        }
+        const loginResult = await signIn("credentials", {
+          email: normalizedEmail,
+          password,
+          redirect: false,
+        });
+        if (loginResult?.error) {
+          setStatusMessage("Account registered successfully! Please sign in.");
+          setIsLogin(true);
+          setPassword("");
+          setName("");
+          return;
+        }
+        router.push("/dashboard");
+      } catch {
+        setErrorMessage("Registration failed. Please check your connection and try again.");
+      }
     }
   };
 
