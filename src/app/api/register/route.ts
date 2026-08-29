@@ -22,7 +22,8 @@ export async function POST(request: Request) {
     await prisma.user.create({ data: { name, email, passwordHash, role: "DELEGATE" } });
 
     return NextResponse.json({ message: "Account registered successfully." }, { status: 201 });
-  } catch {
+  } catch (error) {
+    console.error("Registration error:", error);
     return NextResponse.json({ error: "Registration is unavailable right now. Please try again." }, { status: 500 });
   }
 }
