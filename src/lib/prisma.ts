@@ -4,12 +4,24 @@ declare global {
   var prisma: PrismaClient | undefined;
 }
 
-export const prisma =
-  global.prisma ||
-  new PrismaClient({
-    log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
-  });
+function createPrismaClient(): PrismaClient | null {
+  try {
+    if (!process.env.DATABASE_URL) {
+      console.warn("DATABASE_URL not set. Running in demo mode without database.");
+      return null;
+    }
+    return new PrismaClient({
+      log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+    });
+  } catch (e) {
+    console.warn("Failed to create PrismaClient. Running in demo mode without database.");
+    return null;
+  }
+}
 
-if (process.env.NODE_ENV !== "production") {
+export const prisma: PrismaClient | null =
+  (global.prisma as PrismaClient | undefined) || createPrismaClient();
+
+if (process.env.NODE_ENV !== "production" && prisma) {
   global.prisma = prisma;
 }

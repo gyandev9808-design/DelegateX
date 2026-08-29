@@ -23,19 +23,23 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
+        // If no database is configured, return mock user for demo
+        if (!prisma) {
+          return {
+            id: "mock-id-" + Date.now(),
+            email: credentials.email,
+            name: credentials.email.split("@")[0],
+            role: "DELEGATE",
+          };
+        }
+
         try {
           const user = await prisma.user.findUnique({
             where: { email: credentials.email },
           });
 
           if (!user || !user.passwordHash) {
-            // MOCK: Return a dummy user if not found
-            return {
-              id: "mock-id-123",
-              email: credentials.email,
-              name: "Mock Delegate",
-              role: "DELEGATE",
-            };
+            return null;
           }
 
           const isValid = await bcrypt.compare(credentials.password, user.passwordHash);
